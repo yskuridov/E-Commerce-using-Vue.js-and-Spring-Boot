@@ -20,4 +20,12 @@ public abstract class User {
     private String lastName;
     private String address;
     private double balance;
+
+    public User(String username, String password, String firstName, String lastName, String address){
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+    }
 }
