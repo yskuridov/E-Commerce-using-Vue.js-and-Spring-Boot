@@ -15,8 +15,10 @@ import java.util.ArrayList;
 public class Vendor extends User {
     public Vendor(String username, String password, String firstName, String lastName, String address){
         super(username, password, firstName, lastName, address);
-        int rating;
-        //List<Review> reviews
-        boolean hasOpenComments;
+        double rating;
+        //List<Review> reviews;
+        boolean hasOpenComments = false;
+        //List<Product> products;
+
     }
 }
