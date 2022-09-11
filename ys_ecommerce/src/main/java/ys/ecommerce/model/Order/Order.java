@@ -21,9 +21,16 @@ public class Order {
     private Customer buyer;
     @ManyToOne
     private Vendor seller;
-    //@OneToMany
-    //List<Product> products;
+    @OneToMany
+    List<Product> products;
     private LocalDate orderDate;
     private LocalDate deliveryDate;
 
+    public Order(Customer buyer, Vendor seller, List<Product> products, LocalDate orderDate, LocalDate deliveryDate){
+        this.buyer = buyer;
+        this.seller = seller;
+        this.products = products;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+    }
 }
