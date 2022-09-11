@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ys.ecommerce.model.User.Customer;
+import ys.ecommerce.model.User.Vendor;
 
 @Data
 @NoArgsConstructor
@@ -19,5 +20,9 @@ public class UserDTO {
 
     public UserDTO(Customer customer){
         this(Long.toString(customer.getId()), customer.getUsername(), customer.getPassword(), customer.getFirstName(), customer.getLastName(), customer.getAddress(), Double.toString(customer.getBalance()));
+    }
+
+    public UserDTO(Vendor vendor){
+        this(Long.toString(vendor.getId()), vendor.getUsername(), vendor.getPassword(), vendor.getFirstName(), vendor.getLastName(), vendor.getAddress(), Double.toString(vendor.getBalance()));
     }
 }
