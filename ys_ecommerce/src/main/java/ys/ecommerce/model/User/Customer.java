@@ -18,9 +18,9 @@ import java.util.List;
 
 public class Customer extends User{
     @OneToMany
-    List<Product> cart;
+    private List<Product> cart;
     @OneToMany
-    List<Order> orders;
+    private List<Order> orders;
     public Customer(String username, String password, String firstName, String lastName, String address) {
         super(username, password, firstName, lastName, address);
         cart = new ArrayList<>();

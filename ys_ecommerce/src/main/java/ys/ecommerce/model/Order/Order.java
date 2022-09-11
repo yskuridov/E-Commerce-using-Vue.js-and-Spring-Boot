@@ -22,7 +22,7 @@ public class Order {
     @ManyToOne
     private Vendor seller;
     @OneToMany
-    List<Product> products;
+    private List<Product> products;
     private LocalDate orderDate;
     private LocalDate deliveryDate;
 
