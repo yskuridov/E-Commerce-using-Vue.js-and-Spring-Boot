@@ -23,7 +23,7 @@ public class Product {
     private double deliveryFee;
     private int stock;
     @ManyToOne
-    private Vendor soldBy;
+    private Vendor vendor;
 
     public Product(String name, String description, double price, double deliveryFee, int stock, Vendor vendor){
         this.name = name;
@@ -31,6 +31,6 @@ public class Product {
         this.price = price;
         this.deliveryFee = deliveryFee;
         this.stock = stock;
-        this.soldBy = vendor;
+        this.vendor = vendor;
     }
 }

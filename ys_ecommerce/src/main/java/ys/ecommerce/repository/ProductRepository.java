@@ -1,4 +1,16 @@
 package ys.ecommerce.repository;
 
-public class ProductRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import ys.ecommerce.model.Product.Product;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    Optional<Product> findProductById(Long id);
+    List<Product> findAllByDescriptionContaining(String keyword);
+    List<Product> findAllByNameContaining(String name);
+    List<Product> findAllByDeliveryFeeIsLessThanEqual(Double price);
+    List<Product> findAllByVendorId(Long id);
+    List<Product> findAllByPriceIsLessThanEqual(Double price);
 }

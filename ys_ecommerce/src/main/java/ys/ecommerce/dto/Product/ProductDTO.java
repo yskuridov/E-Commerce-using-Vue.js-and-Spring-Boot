@@ -18,6 +18,6 @@ public class ProductDTO {
     private String soldBy;
 
     public ProductDTO(Product product){
-        this(Long.toString(product.getId()), product.getName(), product.getDescription(), Double.toString(product.getPrice()), Double.toString(product.getDeliveryFee()), Integer.toString(product.getStock()), Long.toString(product.getSoldBy().getId()));
+        this(Long.toString(product.getId()), product.getName(), product.getDescription(), Double.toString(product.getPrice()), Double.toString(product.getDeliveryFee()), Integer.toString(product.getStock()), Long.toString(product.getVendor().getId()));
     }
 }
