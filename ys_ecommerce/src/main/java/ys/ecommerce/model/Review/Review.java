@@ -24,4 +24,10 @@ public class Review {
     private Vendor vendor;
     @Max(value=10)
     private int rating;
+
+    public Review(Customer customer, Vendor vendor, int rating){
+        this.customer = customer;
+        this.vendor = vendor;
+        this.rating = rating;
+    }
 }
