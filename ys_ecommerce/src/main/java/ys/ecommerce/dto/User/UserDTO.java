@@ -8,7 +8,7 @@ import ys.ecommerce.model.User.Customer;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO {
+public class UserDTO {
     private String id;
     private String username;
     private String password;
@@ -17,7 +17,7 @@ public class CustomerDTO {
     private String address;
     private String balance;
 
-    public CustomerDTO(Customer customer){
+    public UserDTO(Customer customer){
         this(Long.toString(customer.getId()), customer.getUsername(), customer.getPassword(), customer.getFirstName(), customer.getLastName(), customer.getAddress(), Double.toString(customer.getBalance()));
     }
 }
