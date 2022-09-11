@@ -27,5 +27,6 @@ public abstract class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.balance = 0.00;
     }
 }
