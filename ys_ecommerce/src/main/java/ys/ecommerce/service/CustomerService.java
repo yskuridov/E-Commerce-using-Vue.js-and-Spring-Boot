@@ -2,9 +2,11 @@ package ys.ecommerce.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ys.ecommerce.dto.Order.OrderDTO;
 import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.dto.Review.ReviewDTO;
+import ys.ecommerce.model.Order.Order;
 import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.model.Review.Comment;
 import ys.ecommerce.model.Review.Review;
@@ -99,6 +101,17 @@ public class CustomerService {
         return Optional.of(new ReviewDTO(review));
     }
 
+    public List<OrderDTO> getOrderHistory(long customerId){
+        List<Order> orders = orderRepository.findAllByBuyerId(customerId);
+        List<OrderDTO> orderDTOs = new ArrayList<>();
+        for(Order o : orders) orderDTOs.add(new OrderDTO(o));
+        return orderDTOs;
+    }
+
+    public Optional<OrderDTO> createOrder(Order order){
+        orderRepository.save(order);
+        return Optional.of(new OrderDTO(order));
+    }
 
 
 }
