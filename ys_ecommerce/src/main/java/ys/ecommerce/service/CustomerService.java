@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
+import ys.ecommerce.dto.Review.ReviewDTO;
 import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.model.Review.Comment;
+import ys.ecommerce.model.Review.Review;
 import ys.ecommerce.model.User.Vendor;
 import ys.ecommerce.repository.*;
 
@@ -83,6 +85,18 @@ public class CustomerService {
     public Optional<CommentDTO> createComment(Comment comment){
         commentRepository.save(comment);
         return Optional.of(new CommentDTO(comment));
+    }
+
+    public List<ReviewDTO> getVendorReviews(long vendorId){
+        List<Review> reviews = reviewRepository.findAllByVendorId(vendorId);
+        List<ReviewDTO> reviewDTOs = new ArrayList<>();
+        for(Review r : reviews) reviewDTOs.add(new ReviewDTO(r));
+        return reviewDTOs;
+    }
+
+    public Optional<ReviewDTO> createReview(Review review){
+        reviewRepository.save(review);
+        return Optional.of(new ReviewDTO(review));
     }
 
 
