@@ -3,7 +3,9 @@ package ys.ecommerce.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ys.ecommerce.dto.Product.ProductDTO;
+import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.model.Product.Product;
+import ys.ecommerce.model.Review.Comment;
 import ys.ecommerce.model.User.Vendor;
 import ys.ecommerce.repository.*;
 
@@ -69,6 +71,18 @@ public class CustomerService {
         List<ProductDTO> productDTOs = new ArrayList<>();
         for(Product p : products) productDTOs.add(new ProductDTO(p));
         return productDTOs;
+    }
+
+    public List<CommentDTO> getVendorComments(long vendorId){
+        List<Comment> comments = commentRepository.findAllByVendorId(vendorId);
+        List<CommentDTO> commentDTOs = new ArrayList<>();
+        for(Comment c : comments) commentDTOs.add(new CommentDTO(c));
+        return commentDTOs;
+    }
+
+    public Optional<CommentDTO> createComment(Comment comment){
+        commentRepository.save(comment);
+        return Optional.of(new CommentDTO(comment));
     }
 
 
