@@ -29,8 +29,7 @@ public class CustomerService {
     private Vendor getVendorFromOptional(String username) throws Exception {
         Optional<Vendor> optVendor = vendorRepository.getVendorByUsername(username);
         if(optVendor.isPresent()){
-            Vendor v = optVendor.get();
-            return v;
+            return optVendor.get();
         }
         else throw new Exception("No vendors exist with that username");
     }

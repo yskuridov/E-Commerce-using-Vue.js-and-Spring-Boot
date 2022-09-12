@@ -7,6 +7,7 @@ import ys.ecommerce.model.User.Vendor;
 import java.util.Optional;
 @Repository
 public interface VendorRepository extends JpaRepository<Vendor, Long> {
+    Optional<Vendor> getVendorById(Long id);
     Optional<Vendor> getVendorByUsername(String username);
 
 }
