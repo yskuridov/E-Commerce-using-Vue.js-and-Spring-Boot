@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ys.ecommerce.dto.Order.OrderDTO;
 import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.dto.Review.ReviewDTO;
@@ -62,4 +63,16 @@ public class VueController {
     public ResponseEntity<List<CommentDTO>> getVendorComments(@PathVariable("id") Long id){
         return new ResponseEntity<>(customerService.getVendorComments(id), HttpStatus.OK);
     }
- }
+
+    @GetMapping("/customer/{id}/orders/active")
+    public ResponseEntity<List<OrderDTO>> getCustomerActiveOrders(@PathVariable("id") Long id) throws Exception {
+        return new ResponseEntity<>(customerService.getActiveOrders(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/customer/{id}/orders")
+    public ResponseEntity<List<OrderDTO>> getCustomerOrders(@PathVariable("id") Long id){
+        return new ResponseEntity<>(customerService.getOrderHistory(id), HttpStatus.OK);
+    }
+
+
+}
