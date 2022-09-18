@@ -191,5 +191,13 @@ public class CustomerService {
         return Optional.of(new ProductDTO(product));
     }
 
-
+    public Optional<ProductDTO> removeProductFromCart(int index, long customerId) throws Exception {
+        Customer c = getCustomerFromOptional(customerId);
+        Product product = c.getCart().get(index);
+        c.getCart().remove(index);
+        product.setStock(product.getStock() + 1);
+        customerRepository.save(c);
+        productRepository.save(product);
+        return Optional.of(new ProductDTO(product));
+    }
 }
