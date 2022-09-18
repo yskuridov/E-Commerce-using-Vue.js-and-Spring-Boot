@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ys.ecommerce.dto.Product.ProductDTO;
+import ys.ecommerce.dto.Review.CommentDTO;
+import ys.ecommerce.dto.Review.ReviewDTO;
 import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.service.CustomerService;
 import ys.ecommerce.service.UserService;
@@ -51,4 +53,13 @@ public class VueController {
         return new ResponseEntity<>(customerService.getProductsByPrice(price), HttpStatus.OK);
     }
 
+    @GetMapping("/vendors/{id}/reviews")
+    public ResponseEntity<List<ReviewDTO>> getVendorReviews(@PathVariable("id") Long id){
+        return new ResponseEntity<>(customerService.getVendorReviews(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/vendors/{id}/comments")
+    public ResponseEntity<List<CommentDTO>> getVendorComments(@PathVariable("id") Long id){
+        return new ResponseEntity<>(customerService.getVendorComments(id), HttpStatus.OK);
+    }
  }
