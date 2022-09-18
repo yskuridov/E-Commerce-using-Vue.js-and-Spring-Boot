@@ -11,11 +11,10 @@ import ys.ecommerce.model.Order.Order;
 public class OrderDTO {
     private String id;
     private String buyer;
-    private String seller;
     private String orderDate;
     private String deliveryDate;
 
     public OrderDTO(Order order){
-        this(Long.toString(order.getId()), Long.toString(order.getBuyer().getId()), Long.toString(order.getSeller().getId()), order.getOrderDate().toString(), order.getDeliveryDate().toString());
+        this(Long.toString(order.getId()), Long.toString(order.getBuyer().getId()),  order.getOrderDate().toString(), order.getDeliveryDate().toString());
     }
 }

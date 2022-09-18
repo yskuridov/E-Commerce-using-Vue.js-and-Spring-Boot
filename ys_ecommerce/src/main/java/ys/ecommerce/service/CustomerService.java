@@ -10,9 +10,11 @@ import ys.ecommerce.model.Order.Order;
 import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.model.Review.Comment;
 import ys.ecommerce.model.Review.Review;
+import ys.ecommerce.model.User.Customer;
 import ys.ecommerce.model.User.Vendor;
 import ys.ecommerce.repository.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,7 @@ public class CustomerService {
     private final ProductRepository productRepository;
     private final VendorRepository vendorRepository;
     private final ReviewRepository reviewRepository;
+    private final CustomerRepository customerRepository;
 
     private Vendor getVendorFromOptional(String username) throws Exception {
         Optional<Vendor> optVendor = vendorRepository.getVendorByUsername(username);
@@ -34,6 +37,35 @@ public class CustomerService {
         else throw new Exception("No vendors exist with that username");
     }
 
+    private Vendor getVendorFromOptional(Long id) throws Exception {
+        Optional<Vendor> optVendor = vendorRepository.getVendorById(id);
+        if(optVendor.isPresent()){
+            return optVendor.get();
+        }
+        else throw new Exception("No vendors exist with that username");
+    }
+
+    private Customer getCustomerFromOptional(Long id) throws Exception{
+        Optional<Customer> optCustomer = customerRepository.getCustomerById(id);
+        if(optCustomer.isPresent()){
+            return optCustomer.get();
+        }
+        else throw new Exception("No customer exists with that id");
+    }
+
+    private void checkProductAvailability(Product p, int desiredAmount) throws Exception{
+        if(p.getStock() < desiredAmount){
+            throw new Exception("The product doesn't have enough stock");
+        }
+    }
+
+    private Product getProductFromOptional(Long id) throws Exception{
+        Optional<Product> optProduct = productRepository.findProductById(id);
+        if(optProduct.isPresent()){
+            return optProduct.get();
+        }
+        else throw new Exception("No product exists with that id");
+    }
     public List<ProductDTO> getProducts(){
         List<Product> products = productRepository.findAll();
         List<ProductDTO> productDTOs = new ArrayList<>();
@@ -83,7 +115,13 @@ public class CustomerService {
         return commentDTOs;
     }
 
-    public Optional<CommentDTO> createComment(Comment comment){
+    public Optional<CommentDTO> createComment(CommentDTO commentDTO) throws Exception {
+        Vendor vendor = getVendorFromOptional(Long.parseLong(commentDTO.getVendor()));
+        if(!vendor.isHasOpenComments()) throw new Exception("The vendor doesn't have open comments enabled");
+        Customer customer = getCustomerFromOptional(Long.parseLong(commentDTO.getCustomer()));
+        Comment comment = new Comment(customer, vendor, commentDTO.getComment());
+        vendor.getComments().add(comment);
+        vendorRepository.save(vendor);
         commentRepository.save(comment);
         return Optional.of(new CommentDTO(comment));
     }
@@ -95,7 +133,19 @@ public class CustomerService {
         return reviewDTOs;
     }
 
-    public Optional<ReviewDTO> createReview(Review review){
+    private boolean hasOrderedFromTheVendor(Customer customer, Vendor vendor){
+        for(Order o : customer.getOrders()){
+            for(Product p : o.getProducts()){
+                if(p.getVendor() == vendor) return true;
+            }
+        }
+        return false;
+    }
+    public Optional<ReviewDTO> createReview(ReviewDTO reviewDTO) throws Exception {
+        Customer customer = getCustomerFromOptional(Long.parseLong(reviewDTO.getCustomer()));
+        Vendor vendor = getVendorFromOptional(Long.parseLong(reviewDTO.getVendor()));
+        if(!hasOrderedFromTheVendor(customer, vendor)) throw new Exception("The customer hasn't ordered from the vendor - impossible to leave a review");
+        Review review = new Review(customer, vendor, Integer.parseInt(reviewDTO.getRating()));
         reviewRepository.save(review);
         return Optional.of(new ReviewDTO(review));
     }
@@ -107,9 +157,38 @@ public class CustomerService {
         return orderDTOs;
     }
 
-    public Optional<OrderDTO> createOrder(Order order){
+    public List<OrderDTO> getActiveOrders(Long customerId) throws Exception{
+        Customer c = getCustomerFromOptional(customerId);
+        List<OrderDTO> activeOrders = new ArrayList<>();
+        for(Order o : c.getOrders()){
+            if(o.getDeliveryDate().isAfter(LocalDate.now())){
+                activeOrders.add(new OrderDTO(o));
+            }
+        }
+        return activeOrders;
+    }
+    public Optional<OrderDTO> createOrder(OrderDTO orderDTO) throws Exception{ //create new Order by getting ustomer and vendor objects from their respective repositories
+        Long customerId = Long.parseLong(orderDTO.getBuyer());
+        Customer c = getCustomerFromOptional(customerId);
+        Order order = new Order(c, c.getCart(), LocalDate.now(), LocalDate.now().plusDays(7));
         orderRepository.save(order);
+        c.getOrders().add(order);
+        c.setCart(new ArrayList<>());
+        customerRepository.save(c);
         return Optional.of(new OrderDTO(order));
+    }
+
+    public Optional<ProductDTO> addProductToCart(ProductDTO productDTO, long customerId, int amount) throws Exception {
+        Product product = getProductFromOptional(Long.parseLong(productDTO.getId()));
+        checkProductAvailability(product, amount);
+        Customer c = getCustomerFromOptional(customerId);
+        for (int i = 0; i < amount; i++) {
+            c.getCart().add(product);
+        }
+        customerRepository.save(c);
+        product.setStock(product.getStock() - amount);
+        productRepository.save(product);
+        return Optional.of(new ProductDTO(product));
     }
 
 

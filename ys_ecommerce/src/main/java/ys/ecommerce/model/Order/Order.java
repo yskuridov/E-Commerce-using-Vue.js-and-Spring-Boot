@@ -20,16 +20,13 @@ public class Order {
     private long id;
     @ManyToOne
     private Customer buyer;
-    @ManyToOne
-    private Vendor seller;
     @OneToMany
     private List<Product> products;
     private LocalDate orderDate;
     private LocalDate deliveryDate;
 
-    public Order(Customer buyer, Vendor seller, List<Product> products, LocalDate orderDate, LocalDate deliveryDate){
+    public Order(Customer buyer, List<Product> products, LocalDate orderDate, LocalDate deliveryDate){
         this.buyer = buyer;
-        this.seller = seller;
         this.products = products;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;

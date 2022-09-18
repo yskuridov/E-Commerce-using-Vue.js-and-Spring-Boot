@@ -4,6 +4,7 @@ package ys.ecommerce.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ys.ecommerce.model.Product.Product;
+import ys.ecommerce.model.Review.Comment;
 import ys.ecommerce.model.Review.Review;
 
 import javax.persistence.DiscriminatorValue;
@@ -19,6 +20,8 @@ import java.util.List;
 public class Vendor extends User {
     @OneToMany
     private List<Review> reviews;
+    @OneToMany
+    private List<Comment> comments;
     @OneToMany
     private List<Product> inventory;
     private boolean hasOpenComments;
