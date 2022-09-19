@@ -8,7 +8,7 @@ import ys.ecommerce.dto.Order.OrderDTO;
 import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.dto.Review.ReviewDTO;
-import ys.ecommerce.model.Product.Product;
+import ys.ecommerce.dto.User.UserDTO;
 import ys.ecommerce.service.CustomerService;
 import ys.ecommerce.service.UserService;
 import ys.ecommerce.service.VendorService;
@@ -74,5 +74,13 @@ public class VueController {
         return new ResponseEntity<>(customerService.getOrderHistory(id), HttpStatus.OK);
     }
 
+    @PostMapping("/vendors")
+    public ResponseEntity<UserDTO> createVendor(@RequestBody UserDTO userDTO){
+        return userService.createVendorAccount(userDTO).map(userForm -> ResponseEntity.status(HttpStatus.CREATED).body((userForm))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 
+    @PostMapping("/customers")
+    public ResponseEntity<UserDTO> createCustomer(@RequestBody UserDTO userDTO){
+        return userService.createCustomerAccount(userDTO).map(userForm -> ResponseEntity.status(HttpStatus.CREATED).body((userForm))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }
