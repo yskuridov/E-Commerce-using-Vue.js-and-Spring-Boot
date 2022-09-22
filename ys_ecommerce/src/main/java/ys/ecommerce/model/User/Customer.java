@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 
-public class Customer extends User{
+public class Customer extends CommerceUser {
     @OneToMany
     private List<Product> cart;
     @OneToMany

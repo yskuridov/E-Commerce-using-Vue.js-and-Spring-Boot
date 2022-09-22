@@ -190,6 +190,7 @@ public class CustomerService {
         productRepository.save(product);
         return Optional.of(new ProductDTO(product));
     }
+    // TODO check for negative inventory
 
     public Optional<ProductDTO> removeProductFromCart(int index, long customerId) throws Exception {
         Customer c = getCustomerFromOptional(customerId);

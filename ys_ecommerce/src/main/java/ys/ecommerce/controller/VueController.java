@@ -76,11 +76,11 @@ public class VueController {
 
     @PostMapping("/vendors")
     public ResponseEntity<UserDTO> createVendor(@RequestBody UserDTO userDTO){
-        return userService.createVendorAccount(userDTO).map(userForm -> ResponseEntity.status(HttpStatus.CREATED).body((userForm))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+        return userService.createVendorAccount(userDTO).map(user -> ResponseEntity.status(HttpStatus.CREATED).body((user))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
     @PostMapping("/customers")
     public ResponseEntity<UserDTO> createCustomer(@RequestBody UserDTO userDTO){
-        return userService.createCustomerAccount(userDTO).map(userForm -> ResponseEntity.status(HttpStatus.CREATED).body((userForm))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+        return userService.createCustomerAccount(userDTO).map(user -> ResponseEntity.status(HttpStatus.CREATED).body((user))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }

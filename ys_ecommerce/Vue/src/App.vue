@@ -1,20 +1,21 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <LoginVue/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import LoginVue from './components/Login.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    LoginVue
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "~@/assets/scss/vendors/bootstrap-vue/index";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -10,7 +10,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "user_type")
 @Data
 @NoArgsConstructor
-public abstract class User {
+public abstract class CommerceUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -21,7 +21,7 @@ public abstract class User {
     private String address;
     private double balance;
 
-    public User(String username, String password, String firstName, String lastName, String address){
+    public CommerceUser(String username, String password, String firstName, String lastName, String address){
         this.username = username;
         this.password = password;
         this.firstName = firstName;

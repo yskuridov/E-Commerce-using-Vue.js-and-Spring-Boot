@@ -17,7 +17,7 @@ import java.util.List;
 @DiscriminatorValue("VENDOR")
 @Data
 @NoArgsConstructor
-public class Vendor extends User {
+public class Vendor extends CommerceUser {
     @OneToMany
     private List<Review> reviews;
     @OneToMany
