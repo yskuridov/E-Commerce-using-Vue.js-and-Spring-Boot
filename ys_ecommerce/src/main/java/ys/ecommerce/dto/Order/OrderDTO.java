@@ -3,7 +3,7 @@ package ys.ecommerce.dto.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ys.ecommerce.model.Order.Order;
+import ys.ecommerce.model.Order.CommerceOrder;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +14,7 @@ public class OrderDTO {
     private String orderDate;
     private String deliveryDate;
 
-    public OrderDTO(Order order){
+    public OrderDTO(CommerceOrder order){
         this(Long.toString(order.getId()), Long.toString(order.getBuyer().getId()),  order.getOrderDate().toString(), order.getDeliveryDate().toString());
     }
 }

@@ -6,7 +6,8 @@ import ys.ecommerce.dto.Order.OrderDTO;
 import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.dto.Review.ReviewDTO;
-import ys.ecommerce.model.Order.Order;
+import ys.ecommerce.model.Order.CommerceOrder;
+import ys.ecommerce.model.Product.CartItem;
 import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.model.Review.Comment;
 import ys.ecommerce.model.Review.Review;
@@ -28,6 +29,7 @@ public class CustomerService {
     private final VendorRepository vendorRepository;
     private final ReviewRepository reviewRepository;
     private final CustomerRepository customerRepository;
+    private final CartItemRepository cartItemRepository;
 
     private Vendor getVendorFromOptional(String username) throws Exception {
         Optional<Vendor> optVendor = vendorRepository.getVendorByUsername(username);
@@ -46,10 +48,13 @@ public class CustomerService {
     }
 
     private Customer getCustomerFromOptional(Long id) throws Exception{
-        Optional<Customer> optCustomer = customerRepository.getCustomerById(id);
+        Optional<Customer> optCustomer = customerRepository.getCustomerWithCart(id);
         if(optCustomer.isPresent()){
-            return optCustomer.get();
+            Customer c = optCustomer.get();
+            c.setOrders(orderRepository.findAllByBuyerId(id));
+            return c;
         }
+
         else throw new Exception("No customer exists with that id");
     }
 
@@ -134,9 +139,9 @@ public class CustomerService {
     }
 
     private boolean hasOrderedFromTheVendor(Customer customer, Vendor vendor){
-        for(Order o : customer.getOrders()){
-            for(Product p : o.getProducts()){
-                if(p.getVendor() == vendor) return true;
+        for(CommerceOrder o : customer.getOrders()){
+            for(CartItem item : o.getProducts()){
+                if(item.getProduct().getVendor() == vendor) return true;
             }
         }
         return false;
@@ -151,48 +156,48 @@ public class CustomerService {
     }
 
     public List<OrderDTO> getOrderHistory(long customerId){
-        List<Order> orders = orderRepository.findAllByBuyerId(customerId);
+        List<CommerceOrder> orders = orderRepository.findAllByBuyerId(customerId);
         List<OrderDTO> orderDTOs = new ArrayList<>();
-        for(Order o : orders) orderDTOs.add(new OrderDTO(o));
+        for(CommerceOrder o : orders) orderDTOs.add(new OrderDTO(o));
         return orderDTOs;
     }
 
     public List<OrderDTO> getActiveOrders(Long customerId) throws Exception{
         Customer c = getCustomerFromOptional(customerId);
         List<OrderDTO> activeOrders = new ArrayList<>();
-        for(Order o : c.getOrders()){
+        for(CommerceOrder o : c.getOrders()){
             if(o.getDeliveryDate().isAfter(LocalDate.now())){
                 activeOrders.add(new OrderDTO(o));
             }
         }
         return activeOrders;
     }
-    public Optional<OrderDTO> createOrder(OrderDTO orderDTO) throws Exception{ //create new Order by getting ustomer and vendor objects from their respective repositories
+    public Optional<OrderDTO> createOrder(OrderDTO orderDTO) throws Exception{
         Long customerId = Long.parseLong(orderDTO.getBuyer());
         Customer c = getCustomerFromOptional(customerId);
-        Order order = new Order(c, c.getCart(), LocalDate.now(), LocalDate.now().plusDays(7));
-        orderRepository.save(order);
+        CommerceOrder order = new CommerceOrder(c, new ArrayList<>(c.getCart()), LocalDate.now(), LocalDate.now().plusDays(7));
         c.getOrders().add(order);
-        c.setCart(new ArrayList<>());
+        c.getCart().clear();
+        orderRepository.save(order);
         customerRepository.save(c);
         return Optional.of(new OrderDTO(order));
     }
 
     public Optional<ProductDTO> addProductToCart(ProductDTO productDTO, long customerId, int amount) throws Exception {
+        Customer c = getCustomerFromOptional(customerId);
         Product product = getProductFromOptional(Long.parseLong(productDTO.getId()));
         checkProductAvailability(product, amount);
-        Customer c = getCustomerFromOptional(customerId);
-        for (int i = 0; i < amount; i++) {
-            c.getCart().add(product);
-        }
-        customerRepository.save(c);
+        CartItem item = new CartItem(amount, product);
+        c.getCart().add(item);
         product.setStock(product.getStock() - amount);
+        cartItemRepository.save(item);
+        customerRepository.save(c);
         productRepository.save(product);
         return Optional.of(new ProductDTO(product));
     }
     // TODO check for negative inventory
 
-    public Optional<ProductDTO> removeProductFromCart(int index, long customerId) throws Exception {
+    /*public Optional<ProductDTO> removeProductFromCart(int index, long customerId) throws Exception {
         Customer c = getCustomerFromOptional(customerId);
         Product product = c.getCart().get(index);
         c.getCart().remove(index);
@@ -200,5 +205,5 @@ public class CustomerService {
         customerRepository.save(c);
         productRepository.save(product);
         return Optional.of(new ProductDTO(product));
-    }
+    }*/
 }

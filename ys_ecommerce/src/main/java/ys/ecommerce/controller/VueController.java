@@ -9,6 +9,7 @@ import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.dto.Review.ReviewDTO;
 import ys.ecommerce.dto.User.UserDTO;
+import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.service.CustomerService;
 import ys.ecommerce.service.UserService;
 import ys.ecommerce.service.VendorService;
@@ -82,5 +83,20 @@ public class VueController {
     @PostMapping("/customers")
     public ResponseEntity<UserDTO> createCustomer(@RequestBody UserDTO userDTO){
         return userService.createCustomerAccount(userDTO).map(user -> ResponseEntity.status(HttpStatus.CREATED).body((user))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PostMapping("/customer/{id}/orders")
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) throws Exception {
+        return customerService.createOrder(orderDTO).map(order -> ResponseEntity.status(HttpStatus.CREATED).body(order)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PostMapping("/customer/{id}/cart/add")
+    public ResponseEntity<ProductDTO> addProductToCart(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) throws Exception {
+        return customerService.addProductToCart(productDTO, id, 1).map(product -> ResponseEntity.status(HttpStatus.CREATED).body(product)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PostMapping("/products")
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) throws Exception {
+        return vendorService.addProductToInventory(productDTO).map(product -> ResponseEntity.status(HttpStatus.CREATED).body(product)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }
