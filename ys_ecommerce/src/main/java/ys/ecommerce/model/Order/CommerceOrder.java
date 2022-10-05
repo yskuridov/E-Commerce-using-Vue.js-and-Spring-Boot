@@ -3,6 +3,7 @@ package ys.ecommerce.model.Order;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ys.ecommerce.model.Product.CartItem;
+import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.model.User.Customer;
 
 import javax.persistence.*;

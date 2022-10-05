@@ -65,38 +65,51 @@ public class VueController {
         return new ResponseEntity<>(customerService.getVendorComments(id), HttpStatus.OK);
     }
 
-    @GetMapping("/customer/{id}/orders/active")
+    @GetMapping("/customers/{id}/orders/active")
     public ResponseEntity<List<OrderDTO>> getCustomerActiveOrders(@PathVariable("id") Long id) throws Exception {
         return new ResponseEntity<>(customerService.getActiveOrders(id), HttpStatus.OK);
     }
 
-    @GetMapping("/customer/{id}/orders")
+    @GetMapping("/customers/{id}/orders")
     public ResponseEntity<List<OrderDTO>> getCustomerOrders(@PathVariable("id") Long id){
         return new ResponseEntity<>(customerService.getOrderHistory(id), HttpStatus.OK);
     }
 
-    @PostMapping("/vendors")
+    @PostMapping("/vendors/add")
     public ResponseEntity<UserDTO> createVendor(@RequestBody UserDTO userDTO){
         return userService.createVendorAccount(userDTO).map(user -> ResponseEntity.status(HttpStatus.CREATED).body((user))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    @PostMapping("/customers")
+    @PostMapping("/customers/add")
     public ResponseEntity<UserDTO> createCustomer(@RequestBody UserDTO userDTO){
         return userService.createCustomerAccount(userDTO).map(user -> ResponseEntity.status(HttpStatus.CREATED).body((user))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    @PostMapping("/customer/{id}/orders")
+    @PostMapping("/customers/{id}/orders/add")
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) throws Exception {
         return customerService.createOrder(orderDTO).map(order -> ResponseEntity.status(HttpStatus.CREATED).body(order)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    @PostMapping("/customer/{id}/cart/add")
-    public ResponseEntity<ProductDTO> addProductToCart(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) throws Exception {
-        return customerService.addProductToCart(productDTO, id, 1).map(product -> ResponseEntity.status(HttpStatus.CREATED).body(product)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    @PostMapping("/customers/{id}/cart/add")
+    public ResponseEntity<ProductDTO> addProductToCart(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO, int amount) throws Exception {
+        return customerService.addProductToCart(productDTO, id, amount).map(product -> ResponseEntity.status(HttpStatus.CREATED).body(product)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    @PostMapping("/products")
+    @PostMapping("/products/add")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) throws Exception {
         return vendorService.addProductToInventory(productDTO).map(product -> ResponseEntity.status(HttpStatus.CREATED).body(product)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @PostMapping("/vendors/reviews/add")
+    public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO) throws Exception {
+        return customerService.createReview(reviewDTO).map(review -> ResponseEntity.status(HttpStatus.CREATED).body(review)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PostMapping("/vendors/comments/add")
+    public ResponseEntity<CommentDTO> addComment(@RequestBody CommentDTO commentDTO) throws Exception {
+        return customerService.createComment(commentDTO).map(comment -> ResponseEntity.status(HttpStatus.CREATED).body(comment)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+
+
 }
