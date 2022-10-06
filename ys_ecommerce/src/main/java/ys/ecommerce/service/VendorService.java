@@ -3,6 +3,7 @@ package ys.ecommerce.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ys.ecommerce.dto.Product.ProductDTO;
+import ys.ecommerce.dto.User.UserDTO;
 import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.model.User.Vendor;
 import ys.ecommerce.repository.*;
@@ -68,5 +69,12 @@ public class VendorService {
         return Optional.of(new ProductDTO(p));
     }
 
+    public Optional<UserDTO> closeVendorComments(Long id) throws Exception{
+        Vendor v = getVendorFromOptional(id);
+        if(v.isHasOpenComments()) v.setHasOpenComments(false);
+        else v.setHasOpenComments(true);
+        vendorRepository.save(v);
+        return Optional.of(new UserDTO(v));
+    }
 
 }

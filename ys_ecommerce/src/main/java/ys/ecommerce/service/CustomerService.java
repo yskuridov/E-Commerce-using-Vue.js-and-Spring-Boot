@@ -6,6 +6,7 @@ import ys.ecommerce.dto.Order.OrderDTO;
 import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.dto.Review.ReviewDTO;
+import ys.ecommerce.dto.User.UserDTO;
 import ys.ecommerce.model.Order.CommerceOrder;
 import ys.ecommerce.model.Product.CartItem;
 import ys.ecommerce.model.Product.Product;
@@ -195,15 +196,21 @@ public class CustomerService {
         productRepository.save(product);
         return Optional.of(new ProductDTO(product));
     }
-    // TODO check for negative inventory
 
-    /*public Optional<ProductDTO> removeProductFromCart(int index, long customerId) throws Exception {
+    public Optional<UserDTO> addFundsToBalance(Long customerId, double amount) throws Exception {
         Customer c = getCustomerFromOptional(customerId);
-        Product product = c.getCart().get(index);
-        c.getCart().remove(index);
-        product.setStock(product.getStock() + 1);
+        c.setBalance(c.getBalance() + amount);
         customerRepository.save(c);
-        productRepository.save(product);
-        return Optional.of(new ProductDTO(product));
-    }*/
+        return Optional.of(new UserDTO(c));
+    }
+
+
+
+    public Optional<ProductDTO> removeProductFromCart(int index, long customerId) throws Exception {
+        Customer c = getCustomerFromOptional(customerId);
+        CartItem product = c.getCart().get(index);
+        c.getCart().remove(index);
+        customerRepository.save(c);
+        return Optional.of(new ProductDTO(product.getProduct()));
+    }
 }
