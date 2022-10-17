@@ -15,6 +15,7 @@ import ys.ecommerce.service.UserService;
 import ys.ecommerce.service.VendorService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/")
@@ -76,6 +77,7 @@ public class VueController {
     }
 
     @PostMapping("/vendors/add")
+    @CrossOrigin("http://localhost:8082")
     public ResponseEntity<UserDTO> createVendor(@RequestBody UserDTO userDTO){
         return userService.createVendorAccount(userDTO).map(user -> ResponseEntity.status(HttpStatus.CREATED).body((user))).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
@@ -110,6 +112,10 @@ public class VueController {
         return customerService.createComment(commentDTO).map(comment -> ResponseEntity.status(HttpStatus.CREATED).body(comment)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<UserDTO> login(@RequestBody UserDTO user) throws Exception{
+        return userService.login(user.getUsername(), user.getPassword()).map(loggedInUser -> ResponseEntity.status(HttpStatus.ACCEPTED).body(loggedInUser)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 
 
 

@@ -3,6 +3,7 @@ package ys.ecommerce.dto.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ys.ecommerce.model.User.CommerceUser;
 import ys.ecommerce.model.User.Customer;
 import ys.ecommerce.model.User.Vendor;
 
@@ -24,5 +25,9 @@ public class UserDTO {
 
     public UserDTO(Vendor vendor){
         this(Long.toString(vendor.getId()), vendor.getUsername(), vendor.getPassword(), vendor.getFirstName(), vendor.getLastName(), vendor.getAddress(), Double.toString(vendor.getBalance()));
+    }
+
+    public UserDTO(CommerceUser user){
+        this(Long.toString(user.getId()), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getAddress(), Double.toString(user.getBalance()));
     }
 }
