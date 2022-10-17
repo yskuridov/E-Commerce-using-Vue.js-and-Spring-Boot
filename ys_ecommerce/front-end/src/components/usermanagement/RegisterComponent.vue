@@ -56,7 +56,6 @@
                   required
                 ></b-form-select>
               </b-form-group>
-              <!-- Modal -->
               <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -84,6 +83,9 @@
             <b-button @click="onSubmit, $bvModal.show('bv-confirmation')" type="submit" variant="success" class="m-2 border border-dark" data-toggle="modal" data-target="#confirmation">Submit</b-button>
             <b-button @click="onReset" type="reset" variant="warning" class="m-2 border border-dark">Reset</b-button>
           </b-form>
+          <p>Already have an account? 
+            <router-link to="/login">Login</router-link>
+          </p>
     </div>
 </template>
 <script>

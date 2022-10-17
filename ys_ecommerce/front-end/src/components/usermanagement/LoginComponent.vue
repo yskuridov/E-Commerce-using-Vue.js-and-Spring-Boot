@@ -21,7 +21,7 @@
               ></b-form-input>
             </b-form-group>
             <b-button @click="onSubmit" type="submit" class="bg-success m-2 border border-dark">Submit</b-button>
-            <b-button @click="onReset" type="reset" class="bg-success m-2 border border-dark">Reset</b-button>
+            <b-button @click="onReset" type="reset" class="bg-warning m-2 border border-dark">Reset</b-button>
           </b-form>
           <p>Don't have an account? 
             <a href="/register">Create one</a>
@@ -29,6 +29,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
     name: 'LoginComponent',
     data() {
@@ -42,6 +43,7 @@ export default {
     methods: {
         onSubmit(event) {
             event.preventDefault()
+            axios.post('http://localhost:8080/customers/add', {username: this.form.username, password: this.form.password})
             
         },
         onReset(event){
