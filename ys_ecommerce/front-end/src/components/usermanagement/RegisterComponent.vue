@@ -47,12 +47,22 @@
                 ></b-form-input>
               </b-form-group>
 
+              <b-form-group label="Select your account type: " label-for="type">
+                <b-form-select
+                  id="type"
+                  v-model="form.accountType"
+                  :options="types"
+                  required
+                ></b-form-select>
+              </b-form-group>
+
             <b-button @click="onSubmit" type="submit" variant="primary">Submit</b-button>
             <b-button @click="onReset" type="reset" variant="danger">Reset</b-button>
           </b-form>
     </div>
 </template>
 <script>
+    import axios from 'axios'
 export default {
     name: 'RegisterComponent',
     data() {
@@ -62,21 +72,24 @@ export default {
                 password: '',
                 name: '',
                 lastName: '',
-                address: ''
-            }
-        };
+                address: '',
+                accountType: ''
+            },
+            types: ['Vendor', 'Customer']
+        }
     },
     methods: {
         onSubmit(event) {
             event.preventDefault()
-            
+            if(this.form.accountType == 'Vendor') axios.post('http://localhost:8080/vendors/add', {username: this.form.username, password: this.form.password, firstName: this.form.firstName, lastName: this.form.lastName, address: this.form.address})
+            else axios.post('http://localhost:8080/customers/add', {username: this.form.username, password: this.form.password, firstName: this.form.firstName, lastName: this.form.lastName, address: this.form.address})
         },
         onReset(event){
             event.preventDefault()
             this.form.username = ''
             this.form.password = ''
         }
-    }
+    },
 }
 </script>
 <style>
