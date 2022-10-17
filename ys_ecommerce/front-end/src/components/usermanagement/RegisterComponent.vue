@@ -1,6 +1,7 @@
 <template>
     <div>
-        <b-form>
+      <h3 class="mt-5 font-weight-bold">Create a new account</h3>
+        <b-form class="col-4 m-auto p-3 border border-warning bg-light">
             <b-form-group label="Username: " label-for="username">
               <b-form-input
                 id="username"
@@ -55,9 +56,33 @@
                   required
                 ></b-form-select>
               </b-form-group>
-
-            <b-button @click="onSubmit" type="submit" variant="primary">Submit</b-button>
-            <b-button @click="onReset" type="reset" variant="danger">Reset</b-button>
+              <!-- Modal -->
+              <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmationLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      ...
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <b-modal id="bv-confirmation" hide-footer hide-header>
+                <div class="d-block text-center">
+                  <h2>Your account has been created!</h2>
+                </div>
+                <b-button class="mt-3" block @click="$bvModal.hide('bv-confirmation')">Ok</b-button>
+            </b-modal>
+            <b-button @click="onSubmit, $bvModal.show('bv-confirmation')" type="submit" variant="success" class="m-2 border border-dark" data-toggle="modal" data-target="#confirmation">Submit</b-button>
+            <b-button @click="onReset" type="reset" variant="warning" class="m-2 border border-dark">Reset</b-button>
           </b-form>
     </div>
 </template>
@@ -88,6 +113,10 @@ export default {
             event.preventDefault()
             this.form.username = ''
             this.form.password = ''
+            this.form.name = ''
+            this.form.lastName = ''
+            this.form.address = ''
+            this.form.accountType = ''
         }
     },
 }

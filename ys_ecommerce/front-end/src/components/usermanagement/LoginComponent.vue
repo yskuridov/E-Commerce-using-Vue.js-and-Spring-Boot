@@ -1,6 +1,7 @@
 <template>
     <div>
-        <b-form>
+      <h3 class="mt-5 font-weight-bold">Login</h3>
+        <b-form class="col-4 m-auto p-3 border border-warning bg-light">
             <b-form-group label="Username: " label-for="username">
               <b-form-input
                 id="username"
@@ -19,8 +20,8 @@
                 required
               ></b-form-input>
             </b-form-group>
-            <b-button @click="onSubmit" type="submit" variant="primary">Submit</b-button>
-            <b-button @click="onReset" type="reset" variant="danger">Reset</b-button>
+            <b-button @click="onSubmit" type="submit" class="bg-success m-2 border border-dark">Submit</b-button>
+            <b-button @click="onReset" type="reset" class="bg-success m-2 border border-dark">Reset</b-button>
           </b-form>
           <p>Don't have an account? 
             <a href="/register">Create one</a>
