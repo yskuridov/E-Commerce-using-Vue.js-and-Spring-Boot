@@ -24,12 +24,15 @@
             <b-button @click="onReset" type="reset" class="bg-warning m-2 border border-dark">Reset</b-button>
           </b-form>
           <p>Don't have an account? 
-            <a href="/register">Create one</a>
+            <router-link to="/register">Create one</router-link>
           </p>
     </div>
 </template>
 <script>
-import axios from 'axios'
+
+import Vue from 'vue';
+import CommonService from '../../services/CommonService'
+
 export default {
     name: 'LoginComponent',
     data() {
@@ -37,13 +40,20 @@ export default {
             form: {
                 username: '',
                 password: '',
-            }
+            },
+            loggedIn: false,
+            user: '',
         };
     },
     methods: {
-        onSubmit(event) {
+        async onSubmit(event) {
             event.preventDefault()
-            axios.post('http://localhost:8080/customers/add', {username: this.form.username, password: this.form.password})
+            this.user = await CommonService.login(this.form.username, this.form.password)
+            if(this.user != null){
+              console.log("before: " + Vue.prototype.$loggedInUser.value) 
+              Vue.prototype.$user.value = JSON.parse(JSON.stringify(this.userDAO));
+              console.log("after: " + Vue.prototype.$loggedInUser.value)
+            }
             
         },
         onReset(event){

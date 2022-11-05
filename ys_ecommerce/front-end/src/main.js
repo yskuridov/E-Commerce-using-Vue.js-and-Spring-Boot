@@ -7,6 +7,7 @@ import RegisterComponent from './components/usermanagement/RegisterComponent.vue
 import HomePage from './components/HomePage.vue'
 
 Vue.use(VueRouter)
+Vue.prototype.$loggedInUser = {value: null}
 
 const routes = [
   {path: '/products', component: ProductsComponent},
