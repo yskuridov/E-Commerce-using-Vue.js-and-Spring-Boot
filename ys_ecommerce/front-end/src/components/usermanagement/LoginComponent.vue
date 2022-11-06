@@ -42,7 +42,7 @@ export default {
                 password: '',
             },
             loggedIn: false,
-            user: '',
+            user: {},
         };
     },
     methods: {
@@ -50,9 +50,7 @@ export default {
             event.preventDefault()
             this.user = await CommonService.login(this.form.username, this.form.password)
             if(this.user != null){
-              console.log("before: " + Vue.prototype.$loggedInUser.value) 
-              Vue.prototype.$user.value = JSON.parse(JSON.stringify(this.userDAO));
-              console.log("after: " + Vue.prototype.$loggedInUser.value)
+              Vue.prototype.$loggedInUser.value = this.user;
             }
             
         },
