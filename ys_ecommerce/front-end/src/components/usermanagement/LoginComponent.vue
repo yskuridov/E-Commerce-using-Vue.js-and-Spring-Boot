@@ -20,7 +20,7 @@
                 required
               ></b-form-input>
             </b-form-group>
-            <b-button @click="onSubmit" type="submit" class="bg-success m-2 border border-dark">Submit</b-button>
+            <b-button @click="onSubmit" type="submit" class="bg-success m-2 border border-dark" v-if="this.$loggedInUser.value == null">Submit</b-button>
             <b-button @click="onReset" type="reset" class="bg-warning m-2 border border-dark">Reset</b-button>
           </b-form>
           <p>Don't have an account? 
@@ -51,6 +51,7 @@ export default {
             this.user = await CommonService.login(this.form.username, this.form.password)
             if(this.user != null){
               Vue.prototype.$loggedInUser.value = this.user;
+              this.$router.push('register')
             }
             
         },
