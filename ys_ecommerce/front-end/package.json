@@ -12,6 +12,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.8.3",
+    "pinia": "^2.0.23",
     "vue": "^2.7.10",
     "vue-router": "^3.6.5"
   },

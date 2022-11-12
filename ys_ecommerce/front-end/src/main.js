@@ -5,9 +5,11 @@ import ProductsComponent from './components/products/ProductsComponent.vue'
 import LoginComponent from './components/usermanagement/LoginComponent.vue'
 import RegisterComponent from './components/usermanagement/RegisterComponent.vue'
 import HomePage from './components/HomePage.vue'
+import { createPinia } from 'pinia'
 
 Vue.use(VueRouter)
 Vue.prototype.$loggedInUser = {value: null}
+Vue.use(createPinia())
 
 const routes = [
   {path: '/products', component: ProductsComponent},
