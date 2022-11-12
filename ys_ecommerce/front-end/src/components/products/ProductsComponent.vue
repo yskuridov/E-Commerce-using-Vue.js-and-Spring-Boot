@@ -1,21 +1,22 @@
 <template lang="">
     <div>
-        <b-form>
-            <b-form-select
-                size="sm"
-                id="type"
-                v-model="selected"
-                :options="options"
-                required
-            >
-            </b-form-select>
-            <b-form-input size="sm" placeholder="Search" v-model="text" required></b-form-input>
-            <b-button size="sm" type="submit" @click="onClick">Search</b-button>
-            <b-form-group id="searchBy" label-for="searchByOptions" size="sm" class="col-1">
+        <h3 class="mt-5 font-weight-bold">Search for products</h3>
+        <b-form class="col-4 m-auto p-3 border border-warning bg-light">
+            <b-form-group label="Search by:" label-for="type">
+                <b-form-select
+                    size="sm"
+                    id="type"
+                    v-model="selected"
+                    :options="options"
+                    required
+                >
+                </b-form-select>
             </b-form-group>
+            <b-form-input size="sm" placeholder="Search" v-model="text" required></b-form-input>
+            <b-button class="m-2 border border-dark" type="submit" @click="onClick">Search</b-button>
         </b-form>
-        <div class="bg-warning">
-            <ProductComponent
+        <div class="bg-warning row justify-content-around">
+            <ProductComponent class="m-2"
             v-for="product in products"
             :key="product.id"
             :pName="product.name"
@@ -38,27 +39,20 @@ export default {
             products: [],
             text:'',
             selected: '',
-            searchWasMade: false,
-            options: [{ text: 'Select search criteria', value: null }, 'Search by price', 'Search by product name', 'Search by description', 'Search by vendor name', 'Products with free delivery'],
+            options: ['Price', 'Product name', 'Description', 'Vendor name', 'Free delivery'],
         }
     },
     methods: {
             async onClick(event){
                 event.preventDefault();
                 this.products = JSON.parse(JSON.stringify(await this.sendRequest(this.selected)))
-                console.log(this.products)
-                this.searchWasMade = true
-                console.log(this.products)
-                console.log(this.text)
-                this.searchWasMade = false
             },
             sendRequest(selected){
-                if(selected == this.options[0]) return false;
-                if(selected == this.options[1]) return CustomerService.searchByPrice(this.text)
-                if(selected == this.options[2]) return CustomerService.searchByName(this.text)
-                if(selected == this.options[3]) return CustomerService.searchByDescription(this.text)
-                if(selected == this.options[4]) return CustomerService.searchByVendor(this.text)
-                if(selected == this.options[5]) return CustomerService.searchByFreeDelivery()
+                if(selected == this.options[0]) return CustomerService.searchByPrice(this.text)
+                if(selected == this.options[1]) return CustomerService.searchByName(this.text)
+                if(selected == this.options[2]) return CustomerService.searchByDescription(this.text)
+                if(selected == this.options[3]) return CustomerService.searchByVendor(this.text)
+                if(selected == this.options[4]) return CustomerService.searchByFreeDelivery()
             }
         }
 }
