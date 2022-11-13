@@ -8,15 +8,15 @@
                 </b-navbar-brand>
                 <b-navbar-nav>
                     <b-nav-item><router-link to="/products">Products</router-link></b-nav-item>
-                    <b-nav-item v-if="isLoggedIn">Profile</b-nav-item>
-                    <b-nav-item v-if="!isLoggedIn">
+                    <b-nav-item v-if="this.userStore.isLoggedIn">Profile</b-nav-item>
+                    <b-nav-item v-if="!this.userStore.isLoggedIn">
                         <router-link to="/login">Login</router-link>
                     </b-nav-item>
                 </b-navbar-nav>
             </div>
-            <div v-if="isLoggedIn">
-                Welcome, {{this.$loggedInUser.value.username}}
-                <b-button @click="disconnect">
+            <div v-if="this.userStore.isLoggedIn" class="d-flex text-warning">
+                Welcome, {{this.userStore.loggedInUser.username}}
+                <b-button @click="this.userStore.logout">
                     <b-icon icon="door-open" aria-hidden="true">Disconnect</b-icon>
                 </b-button>
             </div>
@@ -24,20 +24,14 @@
     </div>
 </template>
 <script>
+import { useUserStore } from '../stores/UserStore'
+
 export default {
     name: 'NavBar',
-    methods: { 
-        disconnect(){
-            this.$loggedInUser.value = null
-            this.$forceUpdate();
-        },
+    setup() {
+          const userStore = useUserStore();
+          return { userStore }
     },
-    computed:{
-        isLoggedIn(){
-            if(this.$loggedInUser.value != null) return true
-            else return false
-        }
-    }
 }
 </script>
 <style lang="">

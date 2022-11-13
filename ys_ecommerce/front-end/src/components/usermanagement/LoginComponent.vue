@@ -26,7 +26,7 @@
               <router-link to="/register">Create one</router-link>
             </p>
           </b-form>
-          <h3 v-if="this.userStore.isLoggedIn == true" class="text-success">You are already logged in!</h3>
+          <h3 v-if="this.userStore.isLoggedIn == true" class="text-success m-5">You are logged in!</h3>
     </div>
 </template>
 <script>
