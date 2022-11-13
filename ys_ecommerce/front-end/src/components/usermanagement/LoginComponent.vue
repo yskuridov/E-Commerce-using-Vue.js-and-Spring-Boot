@@ -1,7 +1,7 @@
 <template>
     <div>
       <h3 class="mt-5 font-weight-bold">Login</h3>
-        <b-form class="col-4 m-auto p-3 border border-warning bg-light">
+        <b-form class="col-4 m-auto p-3 border border-warning bg-light" v-if="this.userStore.isLoggedIn == false">
             <b-form-group label="Username: " label-for="username">
               <b-form-input
                 id="username"
@@ -20,42 +20,40 @@
                 required
               ></b-form-input>
             </b-form-group>
-            <b-button v-b-modal.modal-success @click="onSubmit" type="submit" class="bg-success m-2 border border-dark" v-if="!loggedIn">Submit</b-button>
-            <b-modal v-if="loggedIn" ok-only id="modal-success" class="bg-success" title="Success!"></b-modal>
+            <b-button v-b-modal.modal-success @click="onSubmit" type="submit" class="bg-success m-2 border border-dark">Submit</b-button>
             <b-button @click="onReset" type="reset" class="bg-warning m-2 border border-dark">Reset</b-button>
+            <p class="mt-3">Don't have an account? 
+              <router-link to="/register">Create one</router-link>
+            </p>
           </b-form>
-          <p>Don't have an account? 
-            <router-link to="/register">Create one</router-link>
-          </p>
+          <h3 v-if="this.userStore.isLoggedIn == true" class="text-success">You are already logged in!</h3>
     </div>
 </template>
 <script>
 
-import Vue from 'vue';
 import CommonService from '../../services/CommonService'
+import { useUserStore } from '../../stores/UserStore'
 
 export default {
     name: 'LoginComponent',
+    setup() {
+          const userStore = useUserStore();
+          return { userStore }
+    },
     data() {
         return {
             form: {
                 username: '',
                 password: '',
-            },
-            loggedIn: false,
-            user: {},
+            }
         };
     },
     methods: {
         async onSubmit(event) {
             event.preventDefault()
-            this.user = await CommonService.login(this.form.username, this.form.password)
-            if(this.user != null){
-              Vue.prototype.$loggedInUser.value = this.user;
-              this.loggedIn = true
-              this.$forceUpdate();
-            }
-            
+            this.userStore.login(JSON.parse(JSON.stringify(await CommonService.login(this.form.username, this.form.password))))
+            console.log(this.userStore.isLoggedIn)
+            console.log(this.userStore.loggedInUser)
         },
         onReset(event){
             event.preventDefault()
