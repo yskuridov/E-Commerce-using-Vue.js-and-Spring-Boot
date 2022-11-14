@@ -19,7 +19,7 @@
                 <p>Seller: {{soldBy}}</p>
             </b-card-text>
             <b-button v-if="this.userStore.isLoggedIn" href="#" variant="primary">
-                <b-icon icon="cart2" aria-hidden="true"></b-icon> Add to cart
+                <b-icon @click="addToCart" icon="cart2" aria-hidden="true"></b-icon> Add to cart
             </b-button>
         </b-card>
     </div>
@@ -32,8 +32,13 @@ export default {
           const userStore = useUserStore();
           return { userStore }
     },
-    props: {pName: String, pImage: String, description: String, price: String, deliveryFee: String, stock: String, soldBy: String},
-
+    props: {id: String, pName: String, pImage: String, description: String, price: String, deliveryFee: String, stock: String, soldBy: String},
+    methods: {
+        addToCart(){
+            this.userStore.items.push({id: this.$props.id, name: this.$props.pName, description: this.$props.description, image: this.$props.pImage, price: this.$props.price, deliveryFee: this.$props.deliveryFee, stock: this.$props.stock, soldBy: this.$props.soldBy})
+            console.log(this.userStore.items[0])
+        }
+    },
 }
 </script>
 <style lang="">

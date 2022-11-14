@@ -21,6 +21,7 @@
                 <ProductComponent class="m-2"
                 v-for="product in products"
                 :key="product.id"
+                :id="product.id"
                 :pName="product.name"
                 :pImage="product.imageUrl"
                 :description="product.description"

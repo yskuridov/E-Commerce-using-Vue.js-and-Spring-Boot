@@ -1,7 +1,7 @@
 <template>
     <div>
       <h3 class="mt-5 font-weight-bold">Login</h3>
-        <b-form class="col-4 m-auto p-3 border border-warning bg-light" v-if="this.userStore.isLoggedIn == false">
+        <b-form class="col-4 m-auto p-3 border border-warning bg-light" v-if="!this.userStore.isLoggedIn">
             <b-form-group label="Username: " label-for="username">
               <b-form-input
                 id="username"
@@ -26,7 +26,7 @@
               <router-link to="/register">Create one</router-link>
             </p>
           </b-form>
-          <h3 v-if="this.userStore.isLoggedIn == true" class="text-success m-5">You are logged in!</h3>
+          <h3 v-if="this.userStore.isLoggedIn" class="text-success m-5">You are logged in!</h3>
     </div>
 </template>
 <script>
@@ -52,8 +52,6 @@ export default {
         async onSubmit(event) {
             event.preventDefault()
             this.userStore.login(JSON.parse(JSON.stringify(await CommonService.login(this.form.username, this.form.password))))
-            console.log(this.userStore.isLoggedIn)
-            console.log(this.userStore.loggedInUser)
         },
         onReset(event){
             event.preventDefault()

@@ -9,8 +9,7 @@ class CommonService{
     }
 
     async login(username, password){
-        return await axios.post(LOCALHOST + "login", {username: username, password: password}).then((response) => {console.log(response) 
-            return response.data});
+        return await axios.post(LOCALHOST + "login", {username: username, password: password}).then((response) => {return response.data});
     }
 }
 
