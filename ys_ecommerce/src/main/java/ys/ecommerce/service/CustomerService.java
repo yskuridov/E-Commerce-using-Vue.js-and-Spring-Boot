@@ -3,6 +3,7 @@ package ys.ecommerce.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ys.ecommerce.dto.Order.OrderDTO;
+import ys.ecommerce.dto.Product.CartItemDTO;
 import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.dto.Review.ReviewDTO;
@@ -214,8 +215,12 @@ public class CustomerService {
         return Optional.of(new ProductDTO(product.getProduct()));
     }
 
-    public List<CartItem> getProductsInCart(long customerId) throws Exception{
+    public List<CartItemDTO> getProductsInCart(long customerId) throws Exception{
         Customer c = getCustomerFromOptional(customerId);
-        return c.getCart();
+        List<CartItemDTO> items = new ArrayList<>();
+        for(CartItem item : c.getCart()){
+            items.add(new CartItemDTO(item));
+        }
+        return items;
     }
 }
