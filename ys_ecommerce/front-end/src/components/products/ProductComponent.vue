@@ -36,7 +36,7 @@ export default {
     methods: {
         addToCart(){
             this.userStore.items.push({id: this.$props.id, name: this.$props.pName, description: this.$props.description, image: this.$props.pImage, price: this.$props.price, deliveryFee: this.$props.deliveryFee, stock: this.$props.stock, soldBy: this.$props.soldBy})
-            console.log(this.userStore.items[0])
+            console.log(this.userStore.items)
         }
     },
 }

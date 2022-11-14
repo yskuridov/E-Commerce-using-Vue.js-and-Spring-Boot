@@ -9,7 +9,7 @@
                 <b-navbar-nav>
                     <b-nav-item><router-link to="/products">Products</router-link></b-nav-item>
                     <b-nav-item v-if="this.userStore.isLoggedIn && this.userStore.isVendor">My Profile</b-nav-item>
-                    <b-nav-item v-if="this.userStore.isLoggedIn && !this.userStore.isVendor">My cart</b-nav-item>
+                    <b-nav-item v-if="this.userStore.isLoggedIn && !this.userStore.isVendor"><router-link to="/cart">My cart</router-link></b-nav-item>
                     <b-nav-item v-if="!this.userStore.isLoggedIn">
                         <router-link to="/login">Login</router-link>
                     </b-nav-item>
