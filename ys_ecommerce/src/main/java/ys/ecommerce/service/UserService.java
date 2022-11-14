@@ -33,13 +33,15 @@ public class UserService {
         Optional<Vendor> vendor = vendorRepository.getVendorByUsername(username);
         Optional<Customer> customer = customerRepository.getCustomerByName(username);
         CommerceUser user;
+        System.out.println(vendor.isEmpty());
+        System.out.println(customer.isEmpty());
         if(vendor.isEmpty() && customer.isEmpty()){
             throw new Exception("The username provided is incorrect");
         }
         if(vendor.isPresent()){
             user = vendor.get();
         } else user = customer.get();
-        if(user.getPassword() != password) throw new Exception("The password is incorrect");
+        if(!user.getPassword().equals(password)) throw new Exception("The password is incorrect");
         return Optional.of(new UserDTO(user));
     }
 }

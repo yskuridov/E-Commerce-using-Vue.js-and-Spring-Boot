@@ -18,6 +18,7 @@ public class Product {
     @GeneratedValue
     private long id;
     private String name;
+    private String imageUrl;
     private String description;
     private double price;
     private double deliveryFee;
@@ -25,8 +26,9 @@ public class Product {
     @ManyToOne
     private Vendor vendor;
 
-    public Product(String name, String description, double price, double deliveryFee, int stock, Vendor vendor){
+    public Product(String name, String imageUrl, String description, double price, double deliveryFee, int stock, Vendor vendor){
         this.name = name;
+        this.imageUrl = imageUrl;
         this.description = description;
         this.price = price;
         this.deliveryFee = deliveryFee;

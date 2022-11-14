@@ -213,4 +213,9 @@ public class CustomerService {
         customerRepository.save(c);
         return Optional.of(new ProductDTO(product.getProduct()));
     }
+
+    public List<CartItem> getProductsInCart(long customerId) throws Exception{
+        Customer c = getCustomerFromOptional(customerId);
+        return c.getCart();
+    }
 }

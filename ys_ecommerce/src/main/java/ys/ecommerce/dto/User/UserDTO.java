@@ -18,16 +18,17 @@ public class UserDTO {
     private String lastName;
     private String address;
     private String balance;
+    private String accountType;
 
     public UserDTO(Customer customer){
-        this(Long.toString(customer.getId()), customer.getUsername(), customer.getPassword(), customer.getFirstName(), customer.getLastName(), customer.getAddress(), Double.toString(customer.getBalance()));
+        this(Long.toString(customer.getId()), customer.getUsername(), customer.getPassword(), customer.getFirstName(), customer.getLastName(), customer.getAddress(), Double.toString(customer.getBalance()), "customer");
     }
 
     public UserDTO(Vendor vendor){
-        this(Long.toString(vendor.getId()), vendor.getUsername(), vendor.getPassword(), vendor.getFirstName(), vendor.getLastName(), vendor.getAddress(), Double.toString(vendor.getBalance()));
+        this(Long.toString(vendor.getId()), vendor.getUsername(), vendor.getPassword(), vendor.getFirstName(), vendor.getLastName(), vendor.getAddress(), Double.toString(vendor.getBalance()), "vendor");
     }
 
     public UserDTO(CommerceUser user){
-        this(Long.toString(user.getId()), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getAddress(), Double.toString(user.getBalance()));
+        this(Long.toString(user.getId()), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getAddress(), Double.toString(user.getBalance()), null);
     }
 }
