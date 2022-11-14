@@ -15,17 +15,21 @@
             <b-form-input size="sm" placeholder="Search" v-model="text" required></b-form-input>
             <b-button class="m-2 border border-dark" type="submit" @click="onClick">Search</b-button>
         </b-form>
-        <div class="bg-warning row justify-content-around">
-            <ProductComponent class="m-2"
-            v-for="product in products"
-            :key="product.id"
-            :pName="product.name"
-            :description="product.description"
-            :price="product.price"
-            :deliveryFee="product.deliveryFee"
-            :stock="product.stock"
-            :soldBy="product.soldBy">
-            </ProductComponent>
+        <div v-if="this.searchWasMade" class="mt-5 container">
+            <h3>Results: </h3>
+            <div class="row justify-content-around">
+                <ProductComponent class="m-2"
+                v-for="product in products"
+                :key="product.id"
+                :pName="product.name"
+                :pImage="product.imageUrl"
+                :description="product.description"
+                :price="product.price"
+                :deliveryFee="product.deliveryFee"
+                :stock="product.stock"
+                :soldBy="product.vendorUsername">
+                </ProductComponent>
+            </div>
         </div>
     </div>
 </template>
@@ -40,12 +44,14 @@ export default {
             text:'',
             selected: '',
             options: ['Price', 'Product name', 'Description', 'Vendor name', 'Free delivery'],
+            searchWasMade: false,
         }
     },
     methods: {
             async onClick(event){
                 event.preventDefault();
                 this.products = JSON.parse(JSON.stringify(await this.sendRequest(this.selected)))
+                this.searchWasMade = true
             },
             sendRequest(selected){
                 if(selected == this.options[0]) return CustomerService.searchByPrice(this.text)
