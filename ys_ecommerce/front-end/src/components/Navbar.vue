@@ -7,7 +7,7 @@
                     Seller
                 </b-navbar-brand>
                 <b-navbar-nav>
-                    <b-nav-item v-if="isVendor()">
+                    <b-nav-item v-if="isCustomer()">
                         <router-link to="/products">Products</router-link>
                     </b-nav-item>
                     <b-nav-item v-if="isVendor()">

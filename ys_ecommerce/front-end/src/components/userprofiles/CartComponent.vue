@@ -2,9 +2,10 @@
     <div>
         <h3 clas="m-5">Cart</h3>
         <div class="row justify-content-center">
-            <span v-for="item in this.userStore.items" :key="item.id">
+            <div v-for="item in this.userStore.items" :key="item.id">
                 <CartItem :item=item></CartItem>
-            </span>
+            </div>
+            <p>Cart total: </p>
         </div>
     </div>
 </template>

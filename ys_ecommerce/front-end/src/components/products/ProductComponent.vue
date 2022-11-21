@@ -1,12 +1,11 @@
 <template lang="">
-    <div>
+    <div style="width: 18rem;">
         <b-card
             :title="pName"
             :img-src="pImage"
             img-alt="Product image"
-            img-top
+            img-bottom
             img-height="300"
-            img-width="100"
             tag="product"
             style="max-width: 20rem;"
             class="mb-2"
@@ -32,11 +31,10 @@ export default {
           const userStore = useUserStore();
           return { userStore }
     },
-    props: {id: String, pName: String, pImage: String, description: String, price: String, deliveryFee: String, stock: String, soldBy: String},
+    props: {pName: String, pImage: String, description: String, price: String, deliveryFee: String, stock: String, soldBy: String},
     methods: {
         addToCart(){
-            this.userStore.items.push({id: this.$props.id, name: this.$props.pName, description: this.$props.description, image: this.$props.pImage, price: this.$props.price, deliveryFee: this.$props.deliveryFee, stock: this.$props.stock, soldBy: this.$props.soldBy})
-            console.log(this.userStore.items)
+            this.userStore.items.push({id: this.userStore.items.length, name: this.$props.pName, description: this.$props.description, image: this.$props.pImage, price: this.$props.price, deliveryFee: this.$props.deliveryFee, stock: this.$props.stock, soldBy: this.$props.soldBy})
         }
     },
 }

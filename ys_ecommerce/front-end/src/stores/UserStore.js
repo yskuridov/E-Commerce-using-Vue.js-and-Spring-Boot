@@ -25,7 +25,8 @@ export const useUserStore = defineStore('userStore', {
             },
             async setItemsList(){
                 if(this.isVendor) this.items = JSON.parse(JSON.stringify(await VendorService.getVendorInventory(this.loggedInUser.id)))
-                else this.items = JSON.parse(JSON.stringify(await CustomerService.getCartItems()))
+                else this.items = JSON.parse(JSON.stringify(await CustomerService.getCartItems(this.loggedInUser.id)))
+                console.log(this.items.length)
             }
         },
 })
