@@ -3,7 +3,7 @@
         <h4 class="m-3">My products</h4>
         <div class="container">
             <div>
-                <b-card no-body>
+                <b-card no-body class="mb-4">
                     <b-tabs pills card vertical>
                         <OwnedProduct v-for="item in this.userStore.items" :item=item :key="item.id"></OwnedProduct>
                     </b-tabs>
@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import OwnedProduct from './OwnedProductComponent.vue';
+import OwnedProduct from '../OwnedProductComponent.vue';
 import { useUserStore } from '@/stores/UserStore';
 export default {
     name: "ProductsInventory",

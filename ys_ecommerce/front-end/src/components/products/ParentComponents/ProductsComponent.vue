@@ -21,6 +21,7 @@
                 <ProductComponent class="m-2"
                 v-for="product in products"
                 :key="product.id"
+                :origId="product.id"
                 :pName="product.name"
                 :pImage="product.imageUrl"
                 :description="product.description"
@@ -34,7 +35,7 @@
     </div>
 </template>
 <script>
-import ProductComponent from './ProductComponent.vue';
+import ProductComponent from '../ProductComponent.vue';
 import CustomerService from '@/services/CustomerService';
 export default {
     components: { ProductComponent },

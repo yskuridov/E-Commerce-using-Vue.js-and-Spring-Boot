@@ -12,7 +12,7 @@
     </div>
 </template>
 <script>
-import ProductsInventory from '../products/ProductsInventory.vue';
+import ProductsInventory from '../products/ParentComponents/ProductsInventory.vue';
 export default {
     name: "VendorProfile",
     components: {ProductsInventory},

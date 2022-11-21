@@ -31,10 +31,10 @@ export default {
           const userStore = useUserStore();
           return { userStore }
     },
-    props: {pName: String, pImage: String, description: String, price: String, deliveryFee: String, stock: String, soldBy: String},
+    props: {pName: String, pImage: String, description: String, price: String, deliveryFee: String, stock: String, soldBy: String, origId: String},
     methods: {
         addToCart(){
-            this.userStore.items.push({id: this.userStore.items.length, name: this.$props.pName, description: this.$props.description, image: this.$props.pImage, price: this.$props.price, deliveryFee: this.$props.deliveryFee, stock: this.$props.stock, soldBy: this.$props.soldBy})
+            this.userStore.items.push({id: this.userStore.items.length, name: this.$props.pName, description: this.$props.description, image: this.$props.pImage, price: this.$props.price, deliveryFee: this.$props.deliveryFee, stock: this.$props.stock, soldBy: this.$props.soldBy, origId: this.$props.origId})
         }
     },
 }

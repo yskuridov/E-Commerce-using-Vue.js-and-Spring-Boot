@@ -1,16 +1,17 @@
 <template lang="">
-              <b-tab :title="item.name">
-                    <b-card-text>
-                        <p>Name: {{item.name}}</p>
-                        <p>Description: {{item.description}}</p>
-                        <p>Price: {{item.price}}</p>
-                        <p>Delivery fee: {{item.deliveryFee}}</p>
-                        <p>Stock: {{item.stock}}</p>
-                    </b-card-text>
-                    <b-button style="background-color:transparent">
-                        <b-icon icon="x-lg" aria-hidden="true" variant="danger" @click="edit"></b-icon>
-                    </b-button>
-               </b-tab>
+    <b-tab :title="item.name">
+        <b-card-text>
+            <p>Name: {{item.name}}</p>
+            <p>Description: {{item.description}}</p>
+            <p>Price: {{item.price}}</p>
+            <p>Delivery fee: {{item.deliveryFee}}</p>
+            <p>Stock: {{item.stock}}</p>
+        </b-card-text>
+        <b-button class="bg-dark">
+            <b-icon icon="wrench" aria-hidden="true" variant="success" class="p-1" @click="edit"></b-icon>
+            <router-link :to="'/products/edit/' + item.key">Edit product</router-link>
+        </b-button>
+    </b-tab>
 </template>
 <script>
 export default {
@@ -18,7 +19,7 @@ export default {
     props:['item'],
     methods: {
         edit(){
-
+            console.log(this.$props.item.key)
         }
     }
 }
