@@ -7,7 +7,7 @@
         class="mb-2"
         >
             <b-card-text>
-                <p>{{ item.price }}</p>
+                <p>Price: {{ item.price }}$</p>
                 <b-button>
                     <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
                 </b-button>

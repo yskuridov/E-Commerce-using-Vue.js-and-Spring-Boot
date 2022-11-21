@@ -7,15 +7,21 @@
                     Seller
                 </b-navbar-brand>
                 <b-navbar-nav>
-                    <b-nav-item><router-link to="/products">Products</router-link></b-nav-item>
-                    <b-nav-item v-if="this.userStore.isLoggedIn && this.userStore.isVendor">My Profile</b-nav-item>
-                    <b-nav-item v-if="this.userStore.isLoggedIn && !this.userStore.isVendor"><router-link to="/cart">My cart</router-link></b-nav-item>
-                    <b-nav-item v-if="!this.userStore.isLoggedIn">
+                    <b-nav-item v-if="isVendor()">
+                        <router-link to="/products">Products</router-link>
+                    </b-nav-item>
+                    <b-nav-item v-if="isVendor()">
+                        <router-link>My Profile</router-link>
+                    </b-nav-item>
+                    <b-nav-item v-if="isCustomer()">
+                        <router-link to="/cart">My cart</router-link>
+                    </b-nav-item>
+                    <b-nav-item v-if="!isLoggedIn()">
                         <router-link to="/login">Login</router-link>
                     </b-nav-item>
                 </b-navbar-nav>
             </div>
-            <div v-if="this.userStore.isLoggedIn" class="d-flex text-warning">
+            <div v-if="isLoggedIn()" class="d-flex text-warning">
                 Welcome, {{this.userStore.loggedInUser.firstName}}
                 <b-button @click="this.userStore.logout">
                     <b-icon icon="door-open" aria-hidden="true">Disconnect</b-icon>
@@ -33,6 +39,21 @@ export default {
           const userStore = useUserStore();
           return { userStore }
     },
+    methods:{
+        isVendor(){
+            if(this.isLoggedIn() && this.userStore.isVendor) return true;
+            else return false;
+        },
+        isCustomer(){
+            if(this.isLoggedIn() && !this.userStore.isVendor) return true;
+            else return false;
+        },
+        isLoggedIn(){
+            if(this.userStore.isLoggedIn) return true;
+            else return false;
+        }
+    }
+
 }
 </script>
 <style lang="">
