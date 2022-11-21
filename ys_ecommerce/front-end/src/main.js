@@ -5,7 +5,7 @@ import ProductsComponent from './components/products/ProductsComponent.vue'
 import LoginComponent from './components/usermanagement/LoginComponent.vue'
 import RegisterComponent from './components/usermanagement/RegisterComponent.vue'
 import VendorProfile from './components/userprofiles/VendorProfile.vue'
-import CartComponent from './components/userprofiles/CartComponent.vue'
+import CartComponent from './components/products/CartComponent.vue'
 import HomePage from './components/HomePage.vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
