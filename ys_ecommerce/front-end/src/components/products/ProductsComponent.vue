@@ -38,6 +38,7 @@ import ProductComponent from './ProductComponent.vue';
 import CustomerService from '@/services/CustomerService';
 export default {
     components: { ProductComponent },
+    name: "ProductsComponent",
     data(){
         return{ 
             products: [],

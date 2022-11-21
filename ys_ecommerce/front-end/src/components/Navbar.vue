@@ -11,7 +11,7 @@
                         <router-link to="/products">Products</router-link>
                     </b-nav-item>
                     <b-nav-item v-if="isVendor">
-                        <router-link :to="'/vendor/' + this.userStore.loggedInUser.id + '/profile'">My Profile</router-link>
+                        <router-link :to="'/vendors/' + this.userStore.loggedInUser.username">My Profile</router-link>
                     </b-nav-item>
                     <b-nav-item v-if="isCustomer">
                         <router-link to="/cart">My cart</router-link>
