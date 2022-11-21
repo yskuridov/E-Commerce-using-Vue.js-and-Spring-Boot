@@ -17,8 +17,8 @@
                 <p>Available stock: {{stock}}</p>
                 <p>Seller: {{soldBy}}</p>
             </b-card-text>
-            <b-button v-if="this.userStore.isLoggedIn" href="#" variant="primary">
-                <b-icon @click="addToCart" icon="cart2" aria-hidden="true"></b-icon> Add to cart
+            <b-button v-if="this.userStore.isLoggedIn" @click="addToCart" href="#" variant="primary">
+                <b-icon icon="cart2" aria-hidden="true"></b-icon> Add to cart
             </b-button>
         </b-card>
     </div>
