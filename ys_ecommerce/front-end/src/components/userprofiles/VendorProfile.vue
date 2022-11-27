@@ -1,11 +1,11 @@
 <template lang="">
-    <div class="container-flex">
+    <div class="container">
         <h2 class="m-4">{{ $route.params.username }}'s profile</h2>
         <div class="row">
-            <div class="col border border-dark">
+            <div class="col border border-dark m-2">
 
             </div>
-            <div class="col border border-warning">
+            <div class="col border border-warning m-2">
                 <ProductsInventory></ProductsInventory>
             </div>
         </div>
