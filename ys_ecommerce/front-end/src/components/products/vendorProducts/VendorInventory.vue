@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import OwnedProduct from '../OwnedProductComponent.vue';
+import OwnedProduct from './VendorProduct.vue';
 import { useUserStore } from '@/stores/UserStore';
 export default {
     name: "ProductsInventory",

@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import CartItem from '../CartItem.vue'
+import CartItem from './CartItem.vue'
 import { useUserStore } from '@/stores/UserStore';
 
 export default {

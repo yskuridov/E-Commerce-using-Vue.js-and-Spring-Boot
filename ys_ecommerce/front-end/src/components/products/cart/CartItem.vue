@@ -14,7 +14,7 @@
     </div>
 </template>
 <script>
-import { useUserStore } from '../../stores/UserStore'
+import { useUserStore } from '../../../stores/UserStore'
 
 export default {
     name: 'CartItem',

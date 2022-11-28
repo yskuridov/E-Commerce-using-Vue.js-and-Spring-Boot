@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-import ProductsComponent from './components/products/ParentComponents/ProductsComponent.vue'
+import ProductsComponent from './components/products/ProductsList.vue'
 import LoginComponent from './components/usermanagement/LoginComponent.vue'
 import RegisterComponent from './components/usermanagement/RegisterComponent.vue'
 import VendorProfile from './components/userprofiles/VendorProfile.vue'
-import CartComponent from './components/products/ParentComponents/CartComponent.vue'
+import CartComponent from './components/products/cart/Cart.vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
 

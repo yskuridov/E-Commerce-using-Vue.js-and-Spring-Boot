@@ -83,7 +83,7 @@ export default {
                 pStock: null, 
                 pDeliveryFee: null
             },
-            newProduct: {}
+            product: {}
         }
     },
     methods: {
@@ -93,19 +93,9 @@ export default {
         },
         saveProduct(event){
             event.preventDefault();
-            this.newProduct = {
-                id: this.item.id,
-                imageUrl: this.form.pImage, 
-                soldBy: this.item.soldBy, 
-                vendorUsername: this.item.vendorUsername,
-                stock: this.form.pStock,
-                name: this.form.pName,
-                description: this.form.pDesc,
-                price: this.form.pPrice,
-                deliveryFee: this.form.pDeliveryFee
-            }
-            Vue.set(this.userStore.items, this.userStore.items.indexOf(this.item), this.newProduct);
-            VendorService.updateProduct(this.newProduct)
+            this.setProduct();
+            Vue.set(this.userStore.items, this.userStore.items.indexOf(this.item), this.product);
+            VendorService.updateProduct(this.product)
             this.inEditMode = false;
             //tried to change value directly in store - non reactive, had to use vue,set
         },
@@ -120,6 +110,19 @@ export default {
         cancelChanges(){
             this.initializeForm();
             this.inEditMode = false;
+        },
+        setProduct(){
+            this.product = {
+                id: this.item.id,
+                imageUrl: this.form.pImage, 
+                soldBy: this.item.soldBy, 
+                vendorUsername: this.item.vendorUsername,
+                stock: this.form.pStock,
+                name: this.form.pName,
+                description: this.form.pDesc,
+                price: this.form.pPrice,
+                deliveryFee: this.form.pDeliveryFee
+            }
         }
     }
 }
