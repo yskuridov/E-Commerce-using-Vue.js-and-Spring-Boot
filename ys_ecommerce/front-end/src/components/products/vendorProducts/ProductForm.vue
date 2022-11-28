@@ -71,7 +71,7 @@ export default {
                 pDeliveryFee: null
             },
             product: {},
-            inAddMode: true,
+            inAddMode: false,
         }
     },
     methods: {
@@ -87,7 +87,6 @@ export default {
                 VendorService.addProduct(this.product);
             }
             this.toggleParentMode();
-            //tried to change value directly in store - non reactive, had to use vue,set
         },
         async initializeForm(){
             this.form.pName = this.item.name;
@@ -112,6 +111,11 @@ export default {
                 description: this.form.pDesc,
                 price: this.form.pPrice,
                 deliveryFee: this.form.pDeliveryFee
+            }
+            if(this.inAddMode){
+                this.product.id = 0;
+                this.product.soldBy = this.userStore.loggedInUser.id;
+                this.product.vendorUsername = this.userStore.loggedInUser.username;
             }
         },
     }

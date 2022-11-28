@@ -18,7 +18,7 @@ class VendorService{
     }
 
     async addProduct(p){
-        return await axios.post(LOCALHOST + "products/update", 
+        return await axios.post(LOCALHOST + "products/add", 
         {id: p.id, name: p.name, description: p.description, price: p.price, deliveryFee: p.deliveryFee, imageUrl: p.imageUrl, stock: p.stock, soldBy: p.soldBy, vendorUsername: p.vendorUsername})
         .then((response) => {return response.data});
     }

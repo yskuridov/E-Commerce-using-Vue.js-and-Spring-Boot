@@ -2,7 +2,7 @@
     <div>
         <h4 class="m-3">My products</h4>
         <div class="container">
-            <div>
+            <div v-if="this.userStore.isLoggedIn">
                 <b-card no-body class="mb-4">
                     <b-button variant='dark' class="m-3" @click="toggleAddMode()" v-if="!this.inAddMode">
                         New product
