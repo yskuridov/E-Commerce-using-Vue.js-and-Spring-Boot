@@ -16,12 +16,16 @@
                     <b-nav-item v-if="isCustomer">
                         <router-link to="/cart">My cart</router-link>
                     </b-nav-item>
+                    <b-nav-item v-if="isCustomer">
+                        <router-link to="/orders">My orders</router-link>
+                    </b-nav-item>
                     <b-nav-item v-if="!isLoggedIn">
                         <router-link to="/login">Login</router-link>
                     </b-nav-item>
                 </b-navbar-nav>
             </div>
             <div v-if="isLoggedIn" class="d-flex text-warning">
+                <p v-if="isCustomer">Balance: {{this.userStore.loggedInUser.balance}}$</p>
                 Welcome, {{this.userStore.loggedInUser.firstName}}
                 <b-button @click="this.userStore.logout">
                     <b-icon icon="door-open" aria-hidden="true">Disconnect</b-icon>

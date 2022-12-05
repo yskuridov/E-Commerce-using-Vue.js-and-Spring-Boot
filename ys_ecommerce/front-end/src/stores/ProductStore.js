@@ -8,7 +8,7 @@ export const useProductStore = defineStore('productStore', {
         actions: {
             async getInventory(username){
                 this.items = JSON.parse(JSON.stringify(await VendorService.getVendorInventory(username)));
-                console.log(this.items)
             },
+            
         },
 })

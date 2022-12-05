@@ -34,5 +34,12 @@ class CustomerService{
     async getCartItems(id){
         return await axios.get(LOCALHOST + "customers/" + id + "/cart").then((response) => {return response.data});
     }
+    async addReview(review){
+        return await axios.post(LOCALHOST + "vendors/reviews/add", review).then((response) => {return response.data});
+    }
+    async getOrders(id){
+        return await axios.get(LOCALHOST + "customers/" + id + "/orders").then((response) => {return response.data});
+    }
+
 }
 export default new CustomerService()

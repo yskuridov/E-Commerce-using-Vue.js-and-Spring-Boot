@@ -19,7 +19,7 @@
             <h3>Results: </h3>
             <div class="row justify-content-around">
                 <ProductComponent class="m-2"
-                v-for="product in products"
+                v-for="product in this.productStore.items"
                 :key="product.id"
                 :pName="product.name"
                 :pImage="product.imageUrl"
@@ -27,7 +27,8 @@
                 :price="product.price"
                 :deliveryFee="product.deliveryFee"
                 :stock="product.stock"
-                :soldBy="product.vendorUsername">
+                :soldBy="product.vendorUsername"
+                :prodId="product.id">
                 </ProductComponent>
             </div>
         </div>
@@ -36,12 +37,16 @@
 <script>
 import ProductComponent from './Product.vue';
 import CustomerService from '@/services/CustomerService';
+import { useProductStore } from '@/stores/ProductStore';
 export default {
     components: { ProductComponent },
     name: "ProductsComponent",
+    setup() {
+          const productStore = useProductStore();
+          return { productStore }
+    },
     data(){
         return{ 
-            products: [],
             text:'',
             selected: '',
             options: ['Price', 'Product name', 'Description', 'Vendor name', 'Free delivery'],
@@ -51,7 +56,7 @@ export default {
     methods: {
             async onClick(event){
                 event.preventDefault();
-                this.products = JSON.parse(JSON.stringify(await this.sendRequest(this.selected)))
+                this.productStore.items = JSON.parse(JSON.stringify(await this.sendRequest(this.selected)))
                 this.searchWasMade = true
             },
             sendRequest(selected){

@@ -14,6 +14,7 @@ export const useUserStore = defineStore('userStore', {
                     this.isLoggedIn = true
                     this.isVendor = user.vendor
                     await this.setItemsList();
+                    console.log(this.loggedInUser)
                 }
                 else {
                     throw new Error("Incorrect username or password")

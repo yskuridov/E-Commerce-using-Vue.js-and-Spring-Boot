@@ -6,6 +6,8 @@ import LoginComponent from './components/usermanagement/LoginComponent.vue'
 import RegisterComponent from './components/usermanagement/RegisterComponent.vue'
 import VendorProfile from './components/userprofiles/VendorProfile.vue'
 import CartComponent from './components/products/cart/Cart.vue'
+import OrdersComponent from './components/orders/OrderList.vue'
+import NewOrder from './components/orders/NewOrder.vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
 
@@ -18,6 +20,8 @@ const routes = [
   {path: '/register', component: RegisterComponent},
   {path: '/vendors/:username', component: VendorProfile},
   {path: '/cart', component: CartComponent},
+  {path: '/orders', component: OrdersComponent},
+  {path: '/orders/new', component: NewOrder}
 ]
 const router = new VueRouter({
   routes,
