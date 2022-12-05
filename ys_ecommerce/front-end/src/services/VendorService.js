@@ -23,8 +23,8 @@ class VendorService{
         .then((response) => {return response.data});
     }
 
-    async getReviews(id){
-        return await axios.get(LOCALHOST + "vendors/" + id + "/reviews").then((response) => {return response.data});
+    async getReviews(username){
+        return await axios.get(LOCALHOST + "vendors/" + username + "/reviews").then((response) => {return response.data});
     }
 }
 export default new VendorService()

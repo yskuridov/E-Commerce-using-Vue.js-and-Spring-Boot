@@ -9,9 +9,8 @@ export const useReviewStore = defineStore('reviewStore', {
             async addReview(){
                 
             },
-            async setReviewsList(id){
-                this.reviews = JSON.parse(JSON.stringify(await VendorService.getReviews(id)));
-                console.log(this.reviews)
+            async setReviewsList(username){
+                this.reviews = JSON.parse(JSON.stringify(await VendorService.getReviews(username)));
             }
         },
 })

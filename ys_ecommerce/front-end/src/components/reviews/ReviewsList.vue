@@ -1,24 +1,32 @@
 <template lang="">
     <div>
-        <h4 class="m-3">My reviews</h4>
+        <h4 class="m-3">Reviews</h4>
         <div class="container">
-            <div v-if="this.userStore.isLoggedIn">
-                <div class="d-flex justify-content-start">
+            <div>
+                <div class="d-flex justify-content-start" v-if="this.userStore.isVendor">
                     <b-form-checkbox v-model="hasOpenComments" name="check-button" switch>
                       <p v-if="!this.hasOpenComments">{{this.open}}</p>
                       <p v-if="this.hasOpenComments">{{this.closed}}</p>
                     </b-form-checkbox>               
                 </div>
-                <div v-for="review in this.reviewStore.reviews" :key="review.id">
-                    <ReviewComponent :review="review"></ReviewComponent>
+                <div v-if="this.isCustomer()">
+                    <b-button variant='dark' class="m-3" @click="toggleAddMode()">
+                        Add a review
+                        <b-icon icon="pencil" aria-hidden="true" variant="success"></b-icon>
+                    </b-button>
                 </div>
+                <b-card no-body class="mb-4">
+                    <b-tabs pills card vertical>
+                        <ReviewComponent v-for="review in this.reviewStore.reviews" :key="review.id" :review="review"></ReviewComponent>
+                    </b-tabs>
+                </b-card>
             </div>
         </div>
     </div>
 </template>
 <script>
 import { useUserStore } from '@/stores/UserStore';
-import { ReviewComponent} from './Review.vue'
+import  ReviewComponent from './Review.vue'
 import { useReviewStore } from '@/stores/ReviewStore'
 export default {
     name: 'ReviewsList',
@@ -31,17 +39,14 @@ export default {
     data() {
       return {
         open: "Disable new reviews",
-        closed: "Customers can't leave reviews on your profile",
+        closed: "Customers can't leave new reviews on your profile",
         hasOpenComments: this.userStore.loggedInUser.hasOpenComments,
       }
     },
-    mounted: function(){
-        this.setReviewsList();
-    },
     methods: {
-        setReviewsList(){
-            console.log(this.userStore.loggedInUser.id)
-            this.reviewStore.setReviewsList(this.userStore.loggedInUser.id.toString());
+        isCustomer(){
+            if(this.userStore.isLoggedIn && !this.userStore.isVendor) return true;
+            return false;
         }
     }
 }

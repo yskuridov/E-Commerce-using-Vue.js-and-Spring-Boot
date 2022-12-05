@@ -11,7 +11,7 @@
             </div>
             <ProductForm :item="item" :toggle-parent-mode="this.toggleEdit" v-if="this.inEditMode"></ProductForm>
         </b-card-text>
-        <b-button v-if="!inEditMode" @click="this.toggleEdit" href="#" variant='dark'>
+        <b-button v-if="!inEditMode && this.userStore.isLoggedIn" @click="this.toggleEdit" href="#" variant='dark'>
             Edit product
             <b-icon icon="wrench" aria-hidden="true" variant="success" class="p-1"></b-icon>
         </b-button>

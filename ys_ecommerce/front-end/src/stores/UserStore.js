@@ -1,5 +1,4 @@
 import CustomerService from '@/services/CustomerService'
-import VendorService from '@/services/VendorService'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('userStore', {
@@ -15,8 +14,6 @@ export const useUserStore = defineStore('userStore', {
                     this.isLoggedIn = true
                     this.isVendor = user.vendor
                     await this.setItemsList();
-                    console.log(this.items[0])
-                    console.log(this.loggedInUser.id)
                 }
                 else {
                     throw new Error("Incorrect username or password")
@@ -29,8 +26,7 @@ export const useUserStore = defineStore('userStore', {
                 this.isVendor = false
             },
             async setItemsList(){
-                if(this.isVendor) this.items = JSON.parse(JSON.stringify(await VendorService.getVendorInventory(this.loggedInUser.id)))
-                else this.items = JSON.parse(JSON.stringify(await CustomerService.getCartItems(this.loggedInUser.id)))
+                if(!this.isVendor && this.isLoggedIn) this.items = JSON.parse(JSON.stringify(await CustomerService.getCartItems(this.loggedInUser.id)))
             }
             
         },

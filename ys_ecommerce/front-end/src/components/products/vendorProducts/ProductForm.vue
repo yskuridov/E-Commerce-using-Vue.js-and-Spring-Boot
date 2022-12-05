@@ -33,7 +33,7 @@
                 <b-form-input type="number" size="sm" id="stock" v-model="form.pStock" placeholder="Stock"></b-form-input>
             </b-form-group>
           </b-form>
-          <div class="d-flex justify-content-around">
+          <div class="d-flex justify-content-around" v-if="this.userStore.isVendor">
             <b-button @click="this.saveProduct" variant="dark">
                 <b-icon icon="check" aria-hidden="true" variant="success" class="p-1"></b-icon>
                 Save
@@ -79,11 +79,11 @@ export default {
             event.preventDefault();
             this.setProduct();
             if(!this.inAddMode){
-                Vue.set(this.userStore.items, this.userStore.items.indexOf(this.item), this.product);
+                Vue.set(this.productStore.items, this.productStore.items.indexOf(this.item), this.product);
                 VendorService.updateProduct(this.product)
             }
-            else{
-                this.userStore.items.push(this.product);
+            else {
+                this.productStore.items.push(this.product);
                 VendorService.addProduct(this.product);
             }
             this.toggleParentMode();
