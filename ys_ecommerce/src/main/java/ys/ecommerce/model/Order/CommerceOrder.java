@@ -2,8 +2,7 @@ package ys.ecommerce.model.Order;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ys.ecommerce.model.Product.CartItem;
-import ys.ecommerce.model.Product.Product;
+import ys.ecommerce.model.Products.CartItem;
 import ys.ecommerce.model.User.Customer;
 
 import javax.persistence.*;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class CommerceOrder {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
     private Customer buyer;
@@ -25,9 +24,9 @@ public class CommerceOrder {
     private LocalDate orderDate;
     private LocalDate deliveryDate;
 
-    public CommerceOrder(Customer buyer, List<CartItem> products, LocalDate orderDate, LocalDate deliveryDate){
+    public CommerceOrder(Customer buyer, LocalDate orderDate, LocalDate deliveryDate){
         this.buyer = buyer;
-        this.products = products;
+        this.products = buyer.getCart();
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
     }

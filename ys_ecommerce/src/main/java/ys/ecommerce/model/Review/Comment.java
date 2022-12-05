@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import ys.ecommerce.model.User.Customer;
 import ys.ecommerce.model.User.Vendor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -16,7 +13,7 @@ import javax.persistence.ManyToOne;
 
 public class Comment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
     private Customer customer;

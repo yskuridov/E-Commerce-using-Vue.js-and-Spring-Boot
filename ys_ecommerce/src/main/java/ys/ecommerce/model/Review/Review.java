@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import ys.ecommerce.model.User.Customer;
 import ys.ecommerce.model.User.Vendor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 
 @Entity
@@ -16,7 +13,7 @@ import javax.validation.constraints.Max;
 @NoArgsConstructor
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
     private Customer customer;
@@ -24,10 +21,11 @@ public class Review {
     private Vendor vendor;
     @Max(value=10)
     private int rating;
-
-    public Review(Customer customer, Vendor vendor, int rating){
+    private String comment;
+    public Review(Customer customer, Vendor vendor, int rating, String comment){
         this.customer = customer;
         this.vendor = vendor;
         this.rating = rating;
+        this.comment = comment;
     }
 }

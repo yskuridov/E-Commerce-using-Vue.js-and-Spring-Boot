@@ -10,13 +10,11 @@ import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.Review.CommentDTO;
 import ys.ecommerce.dto.Review.ReviewDTO;
 import ys.ecommerce.dto.User.UserDTO;
-import ys.ecommerce.model.Product.Product;
 import ys.ecommerce.service.CustomerService;
 import ys.ecommerce.service.UserService;
 import ys.ecommerce.service.VendorService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/")
@@ -31,6 +29,12 @@ public class VueController {
     @CrossOrigin("http://localhost:8081")
     public ResponseEntity<List<ProductDTO>> getProductsList(){
         return new ResponseEntity<>(customerService.getProducts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/products{id}")
+    @CrossOrigin("http://localhost:8082")
+    public ResponseEntity<ProductDTO> getProductsById(@PathVariable("id") Long id) throws Exception {
+        return new ResponseEntity<>(vendorService.getProductById(id).get(), HttpStatus.OK);
     }
 
     @GetMapping("/products/name/{name}")
@@ -108,11 +112,11 @@ public class VueController {
     @PostMapping("/customers/{id}/cart/add")
     @CrossOrigin("http://localhost:8081")
     public ResponseEntity<ProductDTO> addProductToCart(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO, int amount) throws Exception {
-        return customerService.addProductToCart(productDTO, id, amount).map(product -> ResponseEntity.status(HttpStatus.CREATED).body(product)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+        return customerService.addProductToCart(productDTO, id, amount).map(cartItem -> ResponseEntity.status(HttpStatus.CREATED).body(cartItem)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
     @PostMapping("/products/add")
-    @CrossOrigin("http://localhost:8081")
+    @CrossOrigin("http://localhost:8082")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) throws Exception {
         return vendorService.addProductToInventory(productDTO).map(product -> ResponseEntity.status(HttpStatus.CREATED).body(product)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
@@ -141,6 +145,15 @@ public class VueController {
         return new ResponseEntity<>(customerService.getProductsInCart(id), HttpStatus.OK);
     }
 
+    @GetMapping("/vendors/{id}/inventory")
+    @CrossOrigin("http://localhost:8082")
+    public ResponseEntity<List<ProductDTO>> getVendorInventory(@PathVariable("id") Long id) throws Exception{
+        return new ResponseEntity<>(vendorService.getInventory(id), HttpStatus.OK);
+    }
 
-
+    @PostMapping("/products/update")
+    @CrossOrigin("http://localhost:8082")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO updatedProduct) throws Exception{
+        return vendorService.updateProduct(updatedProduct).map(product -> ResponseEntity.status(HttpStatus.OK).body(product)).orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

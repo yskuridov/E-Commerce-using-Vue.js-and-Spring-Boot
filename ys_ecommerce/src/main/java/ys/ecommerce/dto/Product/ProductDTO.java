@@ -3,7 +3,7 @@ package ys.ecommerce.dto.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ys.ecommerce.model.Product.Product;
+import ys.ecommerce.model.Products.Product;
 
 @Data
 @NoArgsConstructor

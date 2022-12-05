@@ -1,13 +1,10 @@
-package ys.ecommerce.model.Product;
+package ys.ecommerce.model.Products;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ys.ecommerce.model.User.Vendor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -15,7 +12,7 @@ import javax.persistence.ManyToOne;
 
 public class Product {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String imageUrl;

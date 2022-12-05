@@ -3,7 +3,7 @@ package ys.ecommerce.model.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ys.ecommerce.model.Product.Product;
+import ys.ecommerce.model.Products.Product;
 import ys.ecommerce.model.Review.Comment;
 import ys.ecommerce.model.Review.Review;
 

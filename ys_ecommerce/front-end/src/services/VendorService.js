@@ -22,5 +22,9 @@ class VendorService{
         {id: p.id, name: p.name, description: p.description, price: p.price, deliveryFee: p.deliveryFee, imageUrl: p.imageUrl, stock: p.stock, soldBy: p.soldBy, vendorUsername: p.vendorUsername})
         .then((response) => {return response.data});
     }
+
+    async getReviews(id){
+        return await axios.get(LOCALHOST + "vendors/" + id + "/reviews").then((response) => {return response.data});
+    }
 }
 export default new VendorService()

@@ -31,19 +31,19 @@ public class UserService {
 
     public Optional<UserDTO> login(String username, String password) throws Exception{
         Optional<Vendor> vendor = vendorRepository.getVendorByUsername(username);
-        Optional<Customer> customer = customerRepository.getCustomerByName(username);
+        Optional<Customer> customer = customerRepository.getCustomerByUsername(username);
         CommerceUser user;
         boolean isVendor = false;
-        System.out.println(vendor.isEmpty());
-        System.out.println(customer.isEmpty());
+        boolean hasOpenComments = false;
         if(vendor.isEmpty() && customer.isEmpty()){
             throw new Exception("The username provided is incorrect");
         }
         if(vendor.isPresent()){
             user = vendor.get();
             isVendor = true;
+            hasOpenComments = vendor.get().isHasOpenComments();
         } else user = customer.get();
         if(!user.getPassword().equals(password)) throw new Exception("The password is incorrect");
-        return Optional.of(new UserDTO(user, isVendor));
+        return Optional.of(new UserDTO(user, isVendor, hasOpenComments));
     }
 }

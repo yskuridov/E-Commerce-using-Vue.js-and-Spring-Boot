@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ys.ecommerce.dto.Product.ProductDTO;
 import ys.ecommerce.dto.User.UserDTO;
-import ys.ecommerce.model.Product.Product;
+import ys.ecommerce.model.Products.Product;
 import ys.ecommerce.model.User.Vendor;
 import ys.ecommerce.repository.*;
 
@@ -33,9 +33,10 @@ public class VendorService {
         else throw new Exception("The product does not exist");
     }
     public List<ProductDTO> getInventory(Long id) throws Exception {
-        List<Product> inventory = getVendorFromOptional(id).getInventory();
+        Vendor v = getVendorFromOptional(id);
         List<ProductDTO> productDTOs = new ArrayList<>();
-        for(Product p : inventory) productDTOs.add(new ProductDTO(p));
+        for(Product p : v.getInventory()) productDTOs.add(new ProductDTO(p));
+        System.out.println(productDTOs.size());
         return productDTOs;
     }
 
@@ -60,9 +61,21 @@ public class VendorService {
         return Optional.of(new ProductDTO(product));
     }
 
+    public Optional<ProductDTO> updateProduct(ProductDTO updProduct) throws Exception {
+        Product product = getProductFromOptional(Long.parseLong(updProduct.getId()));
+        product.setName(updProduct.getName());
+        product.setDescription(updProduct.getDescription());
+        product.setPrice(Double.parseDouble(updProduct.getPrice()));
+        product.setDeliveryFee(Double.parseDouble(updProduct.getDeliveryFee()));
+        product.setStock(Integer.parseInt(updProduct.getStock()));
+        product.setImageUrl(updProduct.getImageUrl());
+        productRepository.save(product);
+        return Optional.of(new ProductDTO(product));
+    }
+
     public Optional<ProductDTO> addProductToInventory(ProductDTO productDTO) throws Exception {
         Vendor v = getVendorFromOptional(Long.parseLong(productDTO.getSoldBy()));
-        Product p = new Product(productDTO.getName(), productDTO.getDescription(), Double.parseDouble(productDTO.getPrice()), Double.parseDouble(productDTO.getDeliveryFee()), Integer.parseInt(productDTO.getStock()), v);
+        Product p = new Product(productDTO.getName(), productDTO.getImageUrl(), productDTO.getDescription(), Double.parseDouble(productDTO.getPrice()), Double.parseDouble(productDTO.getDeliveryFee()), Integer.parseInt(productDTO.getStock()), v);
         productRepository.save(p);
         v.getInventory().add(p);
         vendorRepository.save(v);
@@ -77,5 +90,10 @@ public class VendorService {
         return Optional.of(new UserDTO(v));
     }
 
+    public Optional<ProductDTO> getProductById(Long id) throws Exception{
+        Optional<Product> p = productRepository.findProductById(id);
+        if(p.get() != null) return Optional.of(new ProductDTO(p.get()));
+        else throw new Exception("The vendor does not exist");
+    }
 
 }

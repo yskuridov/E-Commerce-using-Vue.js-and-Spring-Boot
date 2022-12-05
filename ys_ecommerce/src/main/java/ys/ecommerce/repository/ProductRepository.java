@@ -2,7 +2,7 @@ package ys.ecommerce.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ys.ecommerce.model.Product.Product;
+import ys.ecommerce.model.Products.Product;
 
 import java.util.List;
 import java.util.Optional;

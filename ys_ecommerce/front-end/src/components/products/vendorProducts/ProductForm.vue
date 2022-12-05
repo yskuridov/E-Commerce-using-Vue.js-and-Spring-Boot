@@ -1,5 +1,5 @@
 <template lang="">
-    <div>
+    <div v-if="this.userStore.isLoggedIn">
         <b-form class="col bg-light p-2">
             <b-form-group label="Name: " label-for="name">
               <b-form-input

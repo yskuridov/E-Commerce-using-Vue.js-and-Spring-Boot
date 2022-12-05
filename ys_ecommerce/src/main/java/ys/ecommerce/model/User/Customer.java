@@ -3,11 +3,12 @@ package ys.ecommerce.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ys.ecommerce.model.Order.CommerceOrder;
-import ys.ecommerce.model.Product.CartItem;
+import ys.ecommerce.model.Products.CartItem;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
 

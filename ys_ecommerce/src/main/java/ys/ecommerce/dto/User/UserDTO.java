@@ -19,16 +19,17 @@ public class UserDTO {
     private String address;
     private String balance;
     private boolean isVendor;
+    private boolean hasOpenComments;
 
     public UserDTO(Customer customer){
-        this(Long.toString(customer.getId()), customer.getUsername(), customer.getPassword(), customer.getFirstName(), customer.getLastName(), customer.getAddress(), Double.toString(customer.getBalance()), false);
+        this(Long.toString(customer.getId()), customer.getUsername(), customer.getPassword(), customer.getFirstName(), customer.getLastName(), customer.getAddress(), Double.toString(customer.getBalance()), false, false);
     }
 
     public UserDTO(Vendor vendor){
-        this(Long.toString(vendor.getId()), vendor.getUsername(), vendor.getPassword(), vendor.getFirstName(), vendor.getLastName(), vendor.getAddress(), Double.toString(vendor.getBalance()), true);
+        this(Long.toString(vendor.getId()), vendor.getUsername(), vendor.getPassword(), vendor.getFirstName(), vendor.getLastName(), vendor.getAddress(), Double.toString(vendor.getBalance()), true, vendor.isHasOpenComments());
     }
 
-    public UserDTO(CommerceUser user, boolean isVendor){
-        this(Long.toString(user.getId()), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getAddress(), Double.toString(user.getBalance()), isVendor);
+    public UserDTO(CommerceUser user, boolean isVendor, boolean hasOpenComments){
+        this(Long.toString(user.getId()), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getAddress(), Double.toString(user.getBalance()), isVendor, hasOpenComments);
     }
 }
