@@ -9,16 +9,11 @@
                       <p v-if="this.hasOpenComments">{{this.closed}}</p>
                     </b-form-checkbox>               
                 </div>
-                <div v-if="this.isCustomer()">
-                    <b-button variant='dark' class="m-3" @click="toggleAddMode()">
-                        Add a review
-                        <b-icon icon="pencil" aria-hidden="true" variant="success"></b-icon>
-                    </b-button>
-                </div>
                 <b-card no-body class="mb-4">
                     <b-tabs pills card vertical>
                         <ReviewComponent v-for="review in this.reviewStore.reviews" :key="review.id" :review="review"></ReviewComponent>
                     </b-tabs>
+                    <ReviewForm></ReviewForm>
                 </b-card>
             </div>
         </div>
@@ -27,10 +22,11 @@
 <script>
 import { useUserStore } from '@/stores/UserStore';
 import  ReviewComponent from './Review.vue'
+import ReviewForm from './AddReview.vue'
 import { useReviewStore } from '@/stores/ReviewStore'
 export default {
     name: 'ReviewsList',
-    components: {ReviewComponent},
+    components: {ReviewComponent, ReviewForm},
     setup() {
           const userStore = useUserStore();
           const reviewStore = useReviewStore();
