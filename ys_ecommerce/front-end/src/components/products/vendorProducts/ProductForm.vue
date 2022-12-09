@@ -46,15 +46,17 @@
     </div>
 </template>
 <script>
-import { useUserStore } from '@/stores/UserStore';
+import { useProductStore } from '@/stores/ProductStore';
 import Vue from 'vue';
 import VendorService from '@/services/VendorService';
+import { useUserStore } from '@/stores/UserStore';
 export default {
     name: "ProductForm",
     props: ['item', 'toggleParentMode'],
     setup() {
+        const productStore = useProductStore();
         const userStore = useUserStore();
-        return { userStore }
+        return { productStore, userStore }
     },
     mounted: async function (){
        await this.initializeForm();

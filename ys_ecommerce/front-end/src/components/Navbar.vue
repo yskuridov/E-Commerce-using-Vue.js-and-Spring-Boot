@@ -26,7 +26,7 @@
             </div>
             <div v-if="isLoggedIn" class="d-flex text-warning">
                 <p v-if="isCustomer">Balance: {{this.userStore.loggedInUser.balance}}$</p>
-                Welcome, {{this.userStore.loggedInUser.firstName}}
+                Welcome, {{this.userStore.loggedInUser.username}}
                 <b-button @click="this.userStore.logout">
                     <b-icon icon="door-open" aria-hidden="true">Disconnect</b-icon>
                 </b-button>

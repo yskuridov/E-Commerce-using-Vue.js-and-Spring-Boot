@@ -61,6 +61,7 @@ export default {
                     total: this.getCartTotal
                 })
                 this.userStore.items = [];
+                console.log(this.orderStore.orders)
             }
         },
         getOrderDate(){
@@ -70,7 +71,7 @@ export default {
         },
         getDeliveryDate() {
             const current = new Date();
-            const date = `${current.getDate() + 7}/${current.getMonth()}/${current.getFullYear()}`;
+            const date = `${current.getDate() + 7 }/${current.getMonth()}/${current.getFullYear()}`;
             return date;
         }
     },
